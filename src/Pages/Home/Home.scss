@@ -1,0 +1,30 @@
+.page_container {
+  height: 100%;
+  .homePage_intro {
+    height: 85vh;
+    width: 100%;
+  }
+  .signup_buttons {
+    width: 100%;
+    margin: auto;
+    a {
+      width: 50%;
+    }
+    button {
+      width: 100%;
+    }
+    #register {
+      color: #343a40 !important;
+    }
+    #signin {
+      color: white;
+    }
+  }
+}
+
+.sign {
+  height: 100%;
+  &_message {
+    height: 30vh;
+  }
+}

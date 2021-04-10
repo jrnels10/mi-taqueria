@@ -1,15 +1,18 @@
 import BaseHttpService from './base-http.service';
 import queryString from 'query-string';
 
-export default class TaqueriaService extends BaseHttpService {
+class TaqueriaService extends BaseHttpService {
+  constructor(props) {
+    super(props)
+  }
   async getTaqueria({ status, search }) {
     const queryObj = {};
 
-    if (status.length) {
+    if (status && status.length) {
       queryObj.status = status;
     }
-
-    if (search.length) {
+    debugger
+    if (search && search.length) {
       queryObj.search = search;
     }
 
@@ -25,8 +28,9 @@ export default class TaqueriaService extends BaseHttpService {
     return this.patch(`taqueria/${id}/status`, { status });
   }
 
-  createTaqueria(name, description) {
-    return this.post(`taqueria`, { name, description });
+  createTaqueria(taqueria) {
+    return this.post(`taqueria`, { ...taqueria });
   }
 
 }
+export default TaqueriaService;

@@ -1,4 +1,6 @@
-export interface RegistrationFormData {
+import { RouteChildrenProps, RouteComponentProps } from "react-router-dom";
+
+export interface RegistrationUserData {
   email: string;
   password: string;
   firstName: string;
@@ -23,6 +25,7 @@ export interface Taqueria {
   timeClose: Date;
   status: string;
 }
+
 export interface TaqueriaContextData {
   taqueria: Taqueria[];
 }

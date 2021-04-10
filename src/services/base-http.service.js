@@ -1,11 +1,11 @@
 import axios from 'axios';
-
 export default class BaseHttpService {
   BASE_URL = 'http://localhost:5000';
   _accessToken = null;
 
-  constructor(routerStore) {
-    this.routerStore = routerStore;
+  constructor(props) {
+    console.log(props)
+    this.history = props.history;
   }
 
   async get(endpoint, options = {}) {
@@ -16,6 +16,7 @@ export default class BaseHttpService {
 
   async post(endpoint, data = {}, options = {}) {
     Object.assign(options, this._getCommonOptions());
+    debugger
     return axios.post(`${this.BASE_URL}/${endpoint}`, data, options)
       .catch(error => this._handleHttpError(error));
   }
@@ -43,7 +44,7 @@ export default class BaseHttpService {
   }
 
   _handle401() {
-    this.routerStore.push('/signin');
+    this.history.push('/signin');
   }
 
   _getCommonOptions() {

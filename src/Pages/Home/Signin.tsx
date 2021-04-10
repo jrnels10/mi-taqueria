@@ -1,21 +1,26 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { Container, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { RegistrationFormData } from "../../Utils/Interfaces";
+import { RegistrationUserData } from "../../Utils/Interfaces";
 import AuthService from "../../services/auth.service";
+import { Context } from "../../Utils/Context";
+import { Link } from "react-router-dom";
 
 export const Signin: React.FC = (props: any) => {
-  const authService = new AuthService();
-  const { register, handleSubmit } = useForm<RegistrationFormData>();
-  const onSubmit = useCallback(async (formValues: RegistrationFormData) => {
+  const { authService, user } = useContext(Context);
+  const { register, handleSubmit } = useForm<RegistrationUserData>();
+  const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signin(formValues.email, formValues.password);
-    if (res === 201) {
+    if (res.status === 201) {
+      user.dispatch({ type: "SET_USER", payload: { user: res.data.user } });
       props.history.push("/map");
     }
   }, []);
   return (
     <Container className="sign text-white">
-      <div>Signin page</div>
+      <div className="sign_message">
+        Lets sign in and find your favorite tquerias!
+      </div>
       <br />
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="formBasicEmail">
@@ -26,9 +31,6 @@ export const Signin: React.FC = (props: any) => {
             placeholder="Enter email"
             ref={register}
           />
-          <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text>
         </Form.Group>
 
         <Form.Group controlId="formBasicPassword">
@@ -39,25 +41,25 @@ export const Signin: React.FC = (props: any) => {
             placeholder="Password"
             ref={register}
           />
+          <Form.Text className="text-muted">
+            Don't have an account? Sign up <Link to="signup">here</Link>.
+          </Form.Text>
         </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
-          Submit
+        <Button variant="light" type="submit" className="mt-4 w-100">
+          Sign in!
         </Button>
       </Form>
     </Container>
   );
 };
 
-export const Signup: React.FC = () => {
-  const authService = new AuthService();
-  const { register, handleSubmit } = useForm<RegistrationFormData>();
-  const onSubmit = useCallback(async (formValues: RegistrationFormData) => {
+export const Signup: React.FC = (props: any) => {
+  const { authService } = useContext(Context);
+  const { register, handleSubmit } = useForm<RegistrationUserData>();
+  const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signup(formValues);
     if (res === 201) {
-      // this.props.history.push("/tasks");
+      props.history.push("/map");
     }
   }, []);
 
@@ -115,10 +117,7 @@ export const Signup: React.FC = () => {
             ref={register}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="light" type="submit" className="mt-4 w-100">
           Submit
         </Button>
       </Form>

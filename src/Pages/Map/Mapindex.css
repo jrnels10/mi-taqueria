@@ -1,0 +1,28 @@
+.leaflet-container {
+  height: 100%;
+}
+
+.map_add_taco {
+  height: 75vh;
+  width: 100%;
+  position: absolute;
+  z-index: 1000;
+  bottom: 55px;
+  border-radius: 15px 15px 0px 0px;
+  padding: 10px;
+  -webkit-filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+          filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+}
+
+.map_add_taco .hide--true {
+  height: 60px;
+}
+
+.map_add_taco--geoaddress {
+  position: absolute;
+  top: 10px;
+  z-index: 1000;
+  width: calc(100% - 60px);
+  right: 10px;
+}
+/*# sourceMappingURL=Mapindex.css.map */
