@@ -5,14 +5,14 @@ export interface RegistrationUserData {
   password: string;
   firstName: string;
   lastName: string;
-  userType: string;
+  // userType: string;
 }
 
 export interface User {
   email: string;
   firstName: string;
   lastName: string;
-  userType: string;
+  // userType: string;
 }
 
 export interface Taqueria {

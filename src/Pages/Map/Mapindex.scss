@@ -1,7 +1,8 @@
 @import "./../../defaultCss.scss";
 
 .leaflet-container {
-  height: 100%;
+  height: 100vh;
+  width: 100%;
 }
 
 .map_add_taco {
@@ -16,4 +17,9 @@
 }
 .hide--true {
   height: 60px !important;
+}
+
+.add_taco {
+  z-index: 1000;
+  position: absolute;
 }

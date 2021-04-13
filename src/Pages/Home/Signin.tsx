@@ -13,13 +13,18 @@ export const Signin: React.FC = (props: any) => {
     const res = await authService.signin(formValues.email, formValues.password);
     if (res.status === 201) {
       user.dispatch({ type: "SET_USER", payload: { user: res.data.user } });
-      props.history.push("/map");
+      if (props.location.query && props.location.query.prevPath) {
+        props.history.push(props.location.query.prevPath);
+      } else {
+        props.history.push("/map");
+      }
     }
   }, []);
+  console.log(props);
   return (
     <Container className="sign text-white">
       <div className="sign_message">
-        Lets sign in and find your favorite tquerias!
+        Lets sign in and find your favorite taquerias!
       </div>
       <br />
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -46,7 +51,7 @@ export const Signin: React.FC = (props: any) => {
           </Form.Text>
         </Form.Group>
         <Button variant="light" type="submit" className="mt-4 w-100">
-          Sign in!
+          Sign in
         </Button>
       </Form>
     </Container>
@@ -86,7 +91,7 @@ export const Signup: React.FC = (props: any) => {
             ref={register}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicUserType">
+        {/* <Form.Group controlId="formBasicUserType">
           <Form.Label>User Type</Form.Label>
           <Form.Control
             name="userType"
@@ -94,7 +99,7 @@ export const Signup: React.FC = (props: any) => {
             placeholder="Enter your User Type"
             ref={register}
           />
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
           <Form.Control

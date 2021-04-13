@@ -1,0 +1,73 @@
+@import "./../../defaultCss.scss";
+
+.list {
+  height: 100vh;
+  &_container {
+    padding: 5px 25px;
+    color: white;
+
+    &_options {
+      margin-top: 100px;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  &card {
+    color: white;
+    height: 60px;
+    .taco_img {
+      float: left;
+      border: 2px solid white;
+      border-radius: 50%;
+      position: relative;
+      height: 40px;
+      width: 40px;
+      margin-top: 10px;
+      img {
+        position: absolute;
+        width: 30px;
+        top: 45%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .taco_data {
+      height: 100%;
+      float: left;
+      padding: 8px;
+      border-bottom: 1px solid rgb(81, 81, 86);
+      width: calc(100% - 40px);
+      .taco_data_label {
+        float: left;
+        width: calc(100% - 40px);
+        p {
+          margin: 0;
+        }
+        .star_container {
+        }
+      }
+      .taco_data_status {
+        height: 100%;
+        width: 40px;
+        .status {
+          font-size: 0.8rem;
+          &--CLOSED {
+            border: 2px solid rgb(81, 81, 86);
+            color: rgb(81, 81, 86);
+            border-radius: 30px;
+            padding: 0 6px 2px 6px;
+          }
+        }
+        .miles {
+          &_geoIcon {
+            fill: $green !important;
+            margin-right: 4px;
+          }
+          font-size: 0.6rem;
+        }
+      }
+    }
+  }
+}

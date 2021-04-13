@@ -22,6 +22,7 @@ import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker } from "./Markers";
 import { AuthenticatedOwner } from "../../Components/HOC";
 import { TaqueriaSearch } from './../../Components/Search/Search';
+import { PlusSquareFill } from "react-bootstrap-icons";
 export const Map = () => {
     const {
         tacoService,
@@ -47,30 +48,39 @@ export const Map = () => {
     }, [suggestedLocation]);
     return (
         <React.Fragment>
+            <Route path={`${path}/searchtaco`}>
+                <TaqueriaSearch />
+            </Route>
             <MapContainer
-                center={[33.3, -112.2]} zoom={11}>
+                center={[33.3, -112.2]}
+                zoom={11}
+                zoomControl={false}
+            >
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
+                <MyComponent />
                 {taquerias.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} />)}
                 {!suggestedLocation && setLocate ? <LocationMarker /> : null}
                 {suggestedLocation ? (
                     <SuggestedMarker suggested={suggestedLocation} />
                 ) : null}
             </MapContainer>
-            <AnimatePresence>
+            {/* <AnimatePresence>
                 <Switch>
                     <AuthenticatedOwner path={`${path}/addtaco`} component={MiniMapContainer} />
-                    <Route path={`${path}/searchtaco`}>
-                        <TaqueriaSearch />
-                    </Route>
-                </Switch>
-            </AnimatePresence>
+                    </Switch>
+                </AnimatePresence> */}
         </React.Fragment>
     )
 }
+function MyComponent() {
+    const map = useMap()
+    console.log('map center:', map.getBounds())
 
+    return null
+}
 
 const pageVariants = {
     initial: {

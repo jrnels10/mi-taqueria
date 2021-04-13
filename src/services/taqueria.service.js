@@ -5,24 +5,25 @@ class TaqueriaService extends BaseHttpService {
   constructor(props) {
     super(props)
   }
-  async getTaqueria({ status, search }) {
+  async getTaqueria({ status = "", search }) {
     const queryObj = {};
 
     if (status && status.length) {
       queryObj.status = status;
     }
-    debugger
     if (search && search.length) {
       queryObj.search = search;
     }
 
     const queryStr = queryString.stringify(queryObj);
-    return await this.get('taqueria' + (queryStr ? `?${queryStr}` : '/getall'));
+    return await this.get('taqueria/getall' + (queryStr ? `?${queryStr}` : ''));
   }
-
-  // async deleteTask(id) {
-  //   await this.delete(`tasks/${id}`);
-  // }
+  async getTaquieriaById({ id }) {
+    return await this.get(`taqueria/${id}`);
+  }
+  async getMyTaquerias({ id }) {
+    return await this.get(`taqueria/my/${id}`);
+  }
 
   updateTaqueriaStatus(id, status) {
     return this.patch(`taqueria/${id}/status`, { status });

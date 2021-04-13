@@ -36,7 +36,8 @@ const taqueriaReducer = (state, action) => {
         ...state,
         taqueria: {
           ...state.taqueria,
-          searchList: [...action.payload.search]
+          searchList: [...action.payload.searchList],
+          searchValue: action.payload.searchValue
         }
       }
     default:
@@ -77,6 +78,7 @@ class Provider extends Component {
       status: "CLOSED",
       suggestedLocation: null,
       searchList: [],
+      searchValue: '',
       setLocate: false,
       dispatch: action => this.setState(state => taqueriaReducer(state, action))
     },

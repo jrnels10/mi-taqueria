@@ -4,7 +4,6 @@ export default class BaseHttpService {
   _accessToken = null;
 
   constructor(props) {
-    console.log(props)
     this.history = props.history;
   }
 
@@ -16,7 +15,6 @@ export default class BaseHttpService {
 
   async post(endpoint, data = {}, options = {}) {
     Object.assign(options, this._getCommonOptions());
-    debugger
     return axios.post(`${this.BASE_URL}/${endpoint}`, data, options)
       .catch(error => this._handleHttpError(error));
   }

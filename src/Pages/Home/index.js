@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import { Button, Jumbotron, ButtonGroup, Container } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import tacoImg from './../../Style/Images/taco.png'
+
 import './Home.scss';
 export const Home = () => {
   return <Container className="page_container ">
     <div className='homePage_intro'>
-      <h4>Welcome to Mi Taqueria!</h4>
-      <p>A place to find that authentic street tacos.</p>
+      <label className='main_title pacifico'>Mi Taqueria!</label>
+      <p className='quickSand'>A place to find that authentic street tacos.</p>
+      {/* <div className='taco_img_container'>
+        <div className='taco_img'>
+          <img src={tacoImg} />
+        </div>
+      </div> */}
     </div>
 
     <ButtonGroup aria-label="Basic example" className='signup_buttons'>

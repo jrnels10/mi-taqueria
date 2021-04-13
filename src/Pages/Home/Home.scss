@@ -1,8 +1,45 @@
+@import "./../../defaultCss.scss";
+.pacifico {
+  font-family: $MainFont;
+}
+
+.quickSand {
+  font-family: $SubFont;
+}
 .page_container {
   height: 100%;
   .homePage_intro {
-    height: 85vh;
+    height: 75vh;
     width: 100%;
+    color: white;
+    position: relative;
+    .taco_img_container {
+      position: absolute;
+      width: 100%;
+      height: 40%;
+      // z-index: 0;
+      .taco_img {
+        position: relative;
+        top: 10px;
+        height: 50vw;
+        width: 50vw;
+        border-radius: 50%;
+        border: 10px solid white;
+        margin: auto;
+        img {
+          position: absolute;
+          height: 40vw;
+          top: 45%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+    }
+    .main_title {
+      font-size: 4rem;
+      // -webkit-text-stroke-width: 3px;
+      // -webkit-text-stroke-color: black;
+    }
   }
   .signup_buttons {
     width: 100%;
@@ -28,3 +65,19 @@
     height: 30vh;
   }
 }
+// .taco_img {
+//   float: left;
+//   border: 2px solid white;
+//   border-radius: 50%;
+//   position: relative;
+//   height: 40px;
+//   width: 40px;
+//   margin-top: 10px;
+//   img {
+//     position: absolute;
+//     width: 30px;
+//     top: 45%;
+//     left: 50%;
+//     transform: translate(-50%, -50%);
+//   }
+// }
