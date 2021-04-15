@@ -10,9 +10,13 @@ import { useForm } from "react-hook-form";
 import { Taqueria } from "../../Utils/Interfaces";
 import { withRouter } from "react-router";
 import { Context } from "../../Utils/Context";
+import { Toggle } from "../../Components/Toggle";
 
-const CreateTaco = () => {
+const CreateTaco = (props: any) => {
   const { register, handleSubmit } = useForm<Taqueria>();
+  const [taco, settaco] = useState({
+    ...props.location.query.taco,
+  });
   const [headerMessage, setheaderMessage] = useState<string>(
     "Create new Taqueria"
   );
@@ -23,7 +27,8 @@ const CreateTaco = () => {
         ...taqueria,
         ...formValues,
       };
-      tacoService.createTaqueria(taco);
+      debugger;
+      // tacoService.createTaqueria(taco);
     },
     [taqueria]
   );
@@ -38,7 +43,7 @@ const CreateTaco = () => {
       payload: { taqueria: { ...taqueria, [e.target.name]: e.target.value } },
     });
   };
-
+  console.log(props.location.taco, taco);
   return (
     <Container className="sign text-white">
       <div>{headerMessage}</div>
@@ -49,6 +54,7 @@ const CreateTaco = () => {
           <Form.Control
             name="name"
             type="name"
+            value={taco.name}
             placeholder="Enter name of your taqueria"
             ref={register}
             onChange={(e) => constructTaco(e)}
@@ -61,8 +67,11 @@ const CreateTaco = () => {
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Description</Form.Label>
           <Form.Control
+            as="textarea"
+            rows={3}
             name="description"
             type="description"
+            value={taco.description}
             placeholder="Tell us about your taqueria..."
             ref={register}
             onChange={(e) => constructTaco(e)}

@@ -1,7 +1,7 @@
 import { Home } from "./Pages/Home";
 import { Signin, Signup } from "./Pages/Home/Signin";
 import { Container } from "react-bootstrap";
-import Navigation from "./Components/Navigation";
+import Navigation, { PageControl } from "./Components/Navigation/Navigation";
 import {
   BrowserRouter as Router,
   Switch,
@@ -20,6 +20,7 @@ import { List } from "./Pages/List/List";
 import { TaqueriaSearch } from "./Components/Search/Search";
 import { User } from "./Pages/User/User";
 import { Taco } from "./Pages/Taco/Taco";
+import CreateTaco from "./Pages/Taqueria/CreateTaco";
 export const App = () => {
   return (
     <Container bg="dark" className="bg-dark container_app p-0 m-0 w-100">
@@ -29,7 +30,7 @@ export const App = () => {
             {value => {
               console.log(value)
               return <Container className="container_page p-0">
-                <div style={{ height: 'calc(100vh - 57px' }}>
+                <div style={{ height: 'calc(100vh - 57px', position: 'relative' }}>
                   <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/signin/" component={Signin} />
@@ -37,6 +38,7 @@ export const App = () => {
                     <Route path="/map" component={Map} />
                     <Route path="/list" component={List} />
                     <Route exact path="/taco/:id" component={Taco} />
+                    <Authenticated exact path="/taco/:id/update" component={CreateTaco} />
                     <Authenticated exact path={`/user/owner`} component={User} />
                     <Authenticated path={`/user/favorites`} component={Favorites} />
                   </Switch>

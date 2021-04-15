@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../Utils/Context';
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { ArrowLeftCircle, Pencil } from 'react-bootstrap-icons';
 import { Button } from 'react-bootstrap';
 import placeHolder from './../../Style/Images/y9DpT.jpg';
 import './Taco.scss';
+import { Toggle } from '../../Components/Toggle';
+import { PageControl } from '../../Components/Navigation/Navigation';
 
 export const Taco = () => {
     const { user, tacoService } = useContext(Context);
@@ -31,20 +32,22 @@ export const Taco = () => {
         return () => null;
     }, [])
     console.log(user, taco)
+    const setStatus = async () => {
+        const status = taco.status === 'CLOSED' ? 'OPEN' : 'CLOSED';
+        settaco({ ...taco, status });
+        await tacoService.updateTaqueriaStatus(taco.id, status);
+    }
     return (
         <div className='taco_page'>
-            <div className='taco_page_control'>
-                <ArrowLeftCircle color="white" size={20} onClick={() => history.goBack()} />
-                {user && user.id === taco.userId ? <Pencil color="white" size={20} /> : null}
-            </div>
+            <PageControl />
             <div className='taco_page_img'>
                 <img src={placeHolder} />
             </div>
             <h3>{taco.name}</h3>
             <p>{taco.description}</p>
-
-            <Button>View Menu</Button>
-            <Button>Get Directions</Button>
+            {user && user.id === taco.userId ? <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} /> : null}
+            {/* <Button>View Menu</Button>
+            <Button>Get Directions</Button> */}
         </div>
     )
 }

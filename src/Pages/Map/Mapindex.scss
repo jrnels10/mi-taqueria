@@ -1,7 +1,7 @@
 @import "./../../defaultCss.scss";
 
 .leaflet-container {
-  height: 100vh;
+  height: 100%;
   width: 100%;
 }
 
@@ -22,4 +22,18 @@
 .add_taco {
   z-index: 1000;
   position: absolute;
+}
+
+.select_taco {
+  height: 100px;
+  width: 100%;
+  background: $pink;
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  border-top: 2px solid black;
+  filter: drop-shadow(0px -5px 15px rgba(0, 0, 0, 0.25));
+}
+.markerSelected {
+  opacity: 0.2;
 }

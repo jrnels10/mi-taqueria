@@ -1,9 +1,9 @@
-import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import { Link, withRouter, useRouteMatch, useLocation } from 'react-router-dom';
-import { GeoAltFill, House, PersonCircle, PlusSquare, Search, Star } from 'react-bootstrap-icons';
-import './Navigation.scss'
 import { useContext } from 'react';
-import { Context } from "../Utils/Context";
+import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
+import { GeoAltFill, House, PersonCircle, Pencil, ArrowLeftCircle, Search, Star } from 'react-bootstrap-icons';
+import './Navigation.scss'
+import { Context } from "../../Utils/Context";
 
 const Navigation = () => {
     const { user } = useContext(Context);
@@ -30,3 +30,16 @@ const Navigation = () => {
 };
 
 export default withRouter(Navigation);
+
+
+export const PageControl = () => {
+    const { user } = useContext(Context);
+    let history = useHistory();
+    return <div className='page_control p-1'>
+        <ArrowLeftCircle color="white" size={24} onClick={() => history.goBack()} />
+        {/* {user && user.id === taco.userId ? <Link to={{
+            pathname: `/taco/${taco.id}/update`,
+            query: { taco }
+        }}><Pencil color="white" size={20} /></Link> : null} */}
+    </div>
+}

@@ -8,9 +8,8 @@ import {
     useMap,
     LayerGroup,
 } from "react-leaflet";
-import { User, Taqueria } from "../../Utils/Interfaces";
 import {
-    Switch,
+    Link,
     Route,
     useRouteMatch,
 } from "react-router-dom";
@@ -23,12 +22,14 @@ import { LocationMarker, SuggestedMarker, TaqueriaMarker } from "./Markers";
 import { AuthenticatedOwner } from "../../Components/HOC";
 import { TaqueriaSearch } from './../../Components/Search/Search';
 import { PlusSquareFill } from "react-bootstrap-icons";
+import { Button } from "react-bootstrap";
 export const Map = () => {
     const {
         tacoService,
-        taqueria: { suggestedLocation, setLocate },
+        taqueria: { suggestedLocation, setLocate, selectTaco },
     } = useContext(Context);
     const [taquerias, setTaquerias] = useState([]);
+    const [selectedTaco, setSelectTaco] = useState(selectTaco);
     let { path } = useRouteMatch();
     useEffect(() => {
         const fetchTaquerias = async () => {
@@ -60,13 +61,14 @@ export const Map = () => {
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <MyComponent />
-                {taquerias.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} />)}
+                {/* <MyComponent /> */}
+                {taquerias.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} selectTaco={setSelectTaco} />)}
                 {!suggestedLocation && setLocate ? <LocationMarker /> : null}
                 {suggestedLocation ? (
                     <SuggestedMarker suggested={suggestedLocation} />
                 ) : null}
             </MapContainer>
+            <TacoCard selectTaco={selectedTaco} />
             {/* <AnimatePresence>
                 <Switch>
                     <AuthenticatedOwner path={`${path}/addtaco`} component={MiniMapContainer} />
@@ -75,27 +77,39 @@ export const Map = () => {
         </React.Fragment>
     )
 }
-function MyComponent() {
-    const map = useMap()
-    console.log('map center:', map.getBounds())
+// function MyComponent() {
+//     const map = useMap()
+//     console.log('map center:', map.getBounds())
 
-    return null
-}
-
+//     return null
+// }
 const pageVariants = {
     initial: {
-        y: "500px",
         opacity: 0,
     },
     in: {
-        y: "0px",
         opacity: 1,
     },
     out: {
-        y: "500px",
         opacity: 0,
     },
 };
+const TacoCard = (props) => {
+    const { selectTaco } = props;
+    console.log(props.selectTaco)
+    return selectTaco ? <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ opacity: 0 }}
+        className='select_taco'>
+        {selectTaco.name}
+        <Link to={{
+            pathname: `/taco/${selectTaco.id}`,
+            query: { taco: selectTaco }
+        }} >View More</Link>
+    </motion.div> : null
+}
+
 const MiniMapContainer = (props) => {
     const {
         taqueria,

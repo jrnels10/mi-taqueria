@@ -31,6 +31,14 @@ const taqueriaReducer = (state, action) => {
           setLocate: action.payload.setLocate
         }
       }
+    case "SET_SELECTED_TACO":
+      return {
+        ...state,
+        taqueria: {
+          ...state.taqueria,
+          selectTaco: action.payload.selectTaco
+        }
+      }
     case "SEARCHLIST":
       return {
         ...state,
@@ -73,6 +81,7 @@ class Provider extends Component {
       description: "",
       latitude: 0,
       longitude: 0,
+      selectTaco: null,
       timeOpen: new Date(),
       timeClose: new Date(),
       status: "CLOSED",
