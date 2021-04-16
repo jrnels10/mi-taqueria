@@ -7,18 +7,16 @@ import './Search.scss';
 
 export const TaqueriaSearch = ({ children }) => {
     const { tacoService, taqueria } = useContext(Context);
-    console.log(children)
     const [searchValue, setsearchValue] = useState(taqueria.searchValue)
     const searchBy = async e => {
-        console.log(e.target.value)
         setsearchValue(e.target.value)
-        if (e.target.value.length > 1) {
-            const res = await tacoService.getTaqueria({ search: e.target.value });
-            taqueria.dispatch({
-                type: "SEARCHLIST",
-                payload: { searchValue: e.target.value, searchList: [...res.data] },
-            });
-        }
+        // if (e.target.value.length > 1) {
+        const res = await tacoService.getTaqueria({ search: e.target.value });
+        taqueria.dispatch({
+            type: "SEARCHLIST",
+            payload: { searchValue: e.target.value, searchList: [...res.data] },
+        });
+        // }
     }
     return <div className='taco_search'>
         <Form.Control

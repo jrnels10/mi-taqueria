@@ -52,6 +52,22 @@ const taqueriaReducer = (state, action) => {
       return state;
   }
 };
+const mapReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_MAP_LOCATION":
+      return {
+        ...state,
+        tacoMap: {
+          ...state.tacoMap,
+          mapLocation: action.payload.mapLocation,
+          mapZoom: action.payload.mapZoom
+        }
+      }
+
+    default:
+      return state;
+  }
+}
 const userReducer = (state, action) => {
   switch (action.type) {
 
@@ -61,6 +77,14 @@ const userReducer = (state, action) => {
         user: {
           ...state.user,
           ...action.payload.user
+        }
+      }
+    case "SET_USER_LOCATION":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          location: action.payload.location
         }
       }
     default:
@@ -73,7 +97,13 @@ class Provider extends Component {
   mapboxService = new MapboxService({ history: this.props.history });
   state = {
     user: {
+      location: null,
       dispatch: action => this.setState(state => userReducer(state, action))
+    },
+    tacoMap: {
+      mapLocation: [33.3, -112.2],
+      mapZoom: 11,
+      dispatch: action => this.setState(state => mapReducer(state, action))
     },
     taqueria: {
       id: 0,

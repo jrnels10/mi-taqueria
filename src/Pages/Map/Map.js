@@ -1,10 +1,9 @@
-import React, { useRef } from "react";
-import { useEffect, useContext, useState } from "react";
+import React, { useRef, useEffect, useContext, useState } from "react";
 import {
     MapContainer,
     TileLayer,
     Marker,
-    useMapEvent,
+    useMapEvents,
     useMap,
     LayerGroup,
 } from "react-leaflet";
@@ -18,15 +17,16 @@ import "./Mapindex.scss";
 import CreateTaco from "../Taqueria/CreateTaco";
 import { Context } from "../../Utils/Context";
 import './Mapindex.scss';
-import { LocationMarker, SuggestedMarker, TaqueriaMarker } from "./Markers";
+import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { AuthenticatedOwner } from "../../Components/HOC";
 import { TaqueriaSearch } from './../../Components/Search/Search';
-import { PlusSquareFill } from "react-bootstrap-icons";
+import { PlusSquareFill, XSquareFill } from "react-bootstrap-icons";
 import { Button } from "react-bootstrap";
 export const Map = () => {
     const {
+        tacoMap,
         tacoService,
-        taqueria: { suggestedLocation, setLocate, selectTaco },
+        taqueria: { suggestedLocation, setLocate, selectTaco, searchList },
     } = useContext(Context);
     const [taquerias, setTaquerias] = useState([]);
     const [selectedTaco, setSelectTaco] = useState(selectTaco);
@@ -47,42 +47,63 @@ export const Map = () => {
         }
         return () => { };
     }, [suggestedLocation]);
+    const tacoList = searchList.length ? searchList : taquerias;
     return (
         <React.Fragment>
             <Route path={`${path}/searchtaco`}>
                 <TaqueriaSearch />
             </Route>
             <MapContainer
-                center={[33.3, -112.2]}
-                zoom={11}
+                center={tacoMap.mapLocation}
+                zoom={tacoMap.mapZoom}
                 zoomControl={false}
             >
                 <TileLayer
-                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    url="https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoianJuZWxzMTAiLCJhIjoiY2ticjNwdXR4MXlpcTJ5dG1rdjF4MDdxeSJ9.tiUpLiArSzx6thNUgPOL-w"
                 />
-                {/* <MyComponent /> */}
-                {taquerias.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} selectTaco={setSelectTaco} />)}
+                <MapEvents />
+                <UserMarker />
+                {tacoList.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} selectTaco={setSelectTaco} />)}
                 {!suggestedLocation && setLocate ? <LocationMarker /> : null}
                 {suggestedLocation ? (
-                    <SuggestedMarker suggested={suggestedLocation} />
+                    <SuggestedMarker suggested={suggestedLocation} setSelectTaco={setSelectTaco} />
                 ) : null}
             </MapContainer>
             <TacoCard selectTaco={selectedTaco} />
-            {/* <AnimatePresence>
-                <Switch>
-                    <AuthenticatedOwner path={`${path}/addtaco`} component={MiniMapContainer} />
-                    </Switch>
-                </AnimatePresence> */}
         </React.Fragment>
     )
+};
+function MapEvents(props) {
+    const map = useMap();
+    const { tacoMap } = useContext(Context);
+    // map.locate().on("locationfound", e => {
+    //     map.flyTo(e.latlng, 12);
+    // });
+    // console.log(map.getZoom())
+    // const mapEvents = useMapEvents({
+    //     click: () => {
+    //         mapEvents.locate()
+    //     },
+    //     locationfound: (location) => {
+    //         console.log('location found:', location)
+    //         map.flyTo(location.latlng, map.getZoom())
+    //         setUserLocation([location.latitude, location.longitude])
+    //     },
+    // })
+    const val = useRef();
+    useEffect(
+        () => {
+            val.current = props;
+        },
+        [props]
+    );
+    useEffect(() => {
+        return () => {
+            tacoMap.dispatch({ type: 'SET_MAP_LOCATION', payload: { mapLocation: map.getCenter(), mapZoom: map.getZoom() } })
+        };
+    }, []);
+    return null
 }
-// function MyComponent() {
-//     const map = useMap()
-//     console.log('map center:', map.getBounds())
-
-//     return null
-// }
 const pageVariants = {
     initial: {
         opacity: 0,
@@ -94,9 +115,11 @@ const pageVariants = {
         opacity: 0,
     },
 };
-const TacoCard = (props) => {
-    const { selectTaco } = props;
-    console.log(props.selectTaco)
+const TacoCard = () => {
+    const {
+        taqueria,
+        taqueria: { selectTaco },
+    } = useContext(Context);
     return selectTaco ? <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -107,6 +130,10 @@ const TacoCard = (props) => {
             pathname: `/taco/${selectTaco.id}`,
             query: { taco: selectTaco }
         }} >View More</Link>
+
+        < label onClick={() => taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } })}>
+            <XSquareFill />
+        </label>
     </motion.div> : null
 }
 
