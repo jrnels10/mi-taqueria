@@ -8,7 +8,7 @@ export const Home = () => {
   return <Container className="page_container ">
     <div className='homePage_intro'>
       <label className='main_title pacifico'>Mi Taqueria!</label>
-      <p className='quickSand'>A place to find that authentic street tacos.</p>
+      <p className='quickSand'>Lets go eat some tacos!</p>
       {/* <div className='taco_img_container'>
         <div className='taco_img'>
           <img src={tacoImg} />

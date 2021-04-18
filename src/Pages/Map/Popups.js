@@ -1,8 +1,10 @@
 import React, { useEffect, useContext, useState } from "react";
+import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
 import { Context } from "../../Utils/Context";
 import { Popup } from "react-leaflet";
 export const PopupQuestion = (latlng) => {
     const { mapboxService, taqueria } = useContext(Context);
+    let history = useHistory();
     const confirmMarker = async (confirm) => {
         if (confirm) {
             taqueria.dispatch({
@@ -17,6 +19,7 @@ export const PopupQuestion = (latlng) => {
                     },
                 },
             });
+            history.push('/user/createtaco');
         }
     };
     return (

@@ -10,13 +10,13 @@ import { useForm } from "react-hook-form";
 import { Taqueria } from "../../Utils/Interfaces";
 import { withRouter } from "react-router";
 import { Context } from "../../Utils/Context";
-import { Toggle } from "../../Components/Toggle";
+// import TimePicker from "react-time-picker";
+import { Link } from "react-router-dom";
+import { DaySelector } from "../../Components/Selectors";
 
 const CreateTaco = (props: any) => {
   const { register, handleSubmit } = useForm<Taqueria>();
-  const [taco, settaco] = useState({
-    ...props.location.query.taco,
-  });
+  const [taco, settaco] = useState({});
   const [headerMessage, setheaderMessage] = useState<string>(
     "Create new Taqueria"
   );
@@ -27,8 +27,9 @@ const CreateTaco = (props: any) => {
         ...taqueria,
         ...formValues,
       };
-      debugger;
-      // tacoService.createTaqueria(taco);
+      taqueria.update
+        ? tacoService.updateTaqueria(taco)
+        : tacoService.createTaqueria(taco);
     },
     [taqueria]
   );
@@ -43,7 +44,13 @@ const CreateTaco = (props: any) => {
       payload: { taqueria: { ...taqueria, [e.target.name]: e.target.value } },
     });
   };
-  console.log(props.location.taco, taco);
+  // const setTimePicker = (time: any, name: string) => {
+  //   taqueria.dispatch({
+  //     type: "CREATE",
+  //     payload: { taqueria: { ...taqueria, [name]: time } },
+  //   });
+  // };
+  console.log(taqueria);
   return (
     <Container className="sign text-white">
       <div>{headerMessage}</div>
@@ -54,9 +61,9 @@ const CreateTaco = (props: any) => {
           <Form.Control
             name="name"
             type="name"
-            value={taco.name}
             placeholder="Enter name of your taqueria"
             ref={register}
+            value={taqueria.name}
             onChange={(e) => constructTaco(e)}
           />
           {/* <Form.Text className="text-muted">
@@ -64,25 +71,51 @@ const CreateTaco = (props: any) => {
           </Form.Text> */}
         </Form.Group>
 
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicDescription">
           <Form.Label>Description</Form.Label>
           <Form.Control
             as="textarea"
             rows={3}
             name="description"
             type="description"
-            value={taco.description}
+            value={taqueria.description}
             placeholder="Tell us about your taqueria..."
             ref={register}
             onChange={(e) => constructTaco(e)}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicPassword">
+        <Form.Group controlId="formBasicLocation">
           <GeoAddress setheaderMessage={setheaderMessage} />
         </Form.Group>
-        <Button variant="primary" type="submit">
-          Create
-        </Button>
+        <Form.Group controlId="formBasicDays">
+          <Form.Label className="m-auto text-center  w-100">
+            Days of operation
+          </Form.Label>
+          <DaySelector
+            propsDays={taqueria.daysOfTheWeek.split(",")}
+            callBack={(days: string) =>
+              taqueria.dispatch({
+                type: "CREATE",
+                payload: {
+                  taqueria: { ...taqueria, daysOfTheWeek: days },
+                },
+              })
+            }
+          />
+        </Form.Group>
+
+        {/* <Form.Group controlId="formBasicHours">
+          <Form.Label>Hours of operation</Form.Label>
+          <TimePicker
+            onChange={(time: any) => setTimePicker(time, "")}
+            value={new Date()}
+          />
+        </Form.Group> */}
+        <div className="w-100 mt-5 text-center">
+          <Button className="w-75" variant="primary" type="submit">
+            {taqueria.update ? "Update" : "Create"}
+          </Button>
+        </div>
       </Form>
     </Container>
   );
@@ -117,13 +150,13 @@ const GeoAddress = (props: any) => {
       }
     }
   };
-  const addLocation = async (e: { preventDefault: () => void }) => {
-    taqueria.dispatch({
-      type: "SET_LOCATE",
-      payload: { setLocate: true },
-    });
-    setheaderMessage("Click the location where your taqueria is located.");
-  };
+  // const addLocation = async (e: { preventDefault: () => void }) => {
+  //   taqueria.dispatch({
+  //     type: "SET_LOCATE",
+  //     payload: { setLocate: true },
+  //   });
+  //   setheaderMessage("Click the location where your taqueria is located.");
+  // };
 
   return (
     <Form.Group controlId="formLocation">
@@ -132,6 +165,13 @@ const GeoAddress = (props: any) => {
         <FormControl
           placeholder="Enter address or click on map"
           onChange={(e) => setAddress(e.target.value)}
+          value={
+            address
+              ? address
+              : taqueria.latitude
+              ? `${taqueria.latitude}, ${taqueria.longitude}`
+              : ""
+          }
         />
         <Button variant="primary" onClick={(e) => queryAddress(e)}>
           Search
@@ -139,9 +179,13 @@ const GeoAddress = (props: any) => {
       </InputGroup>
       <Form.Text className="text-muted">
         Dont know the address? Use{" "}
-        <a href="#" onClick={addLocation}>
+        <Link
+          to={{
+            pathname: "/map/createtaco",
+          }}
+        >
           map
-        </a>{" "}
+        </Link>{" "}
         to add your taqueria location.
       </Form.Text>
     </Form.Group>

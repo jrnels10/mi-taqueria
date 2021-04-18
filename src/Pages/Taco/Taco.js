@@ -6,9 +6,10 @@ import placeHolder from './../../Style/Images/y9DpT.jpg';
 import './Taco.scss';
 import { Toggle } from '../../Components/Toggle';
 import { PageControl } from '../../Components/Navigation/Navigation';
+import { PencilSquare } from 'react-bootstrap-icons';
 
 export const Taco = () => {
-    const { user, tacoService } = useContext(Context);
+    const { user, tacoService, taqueria } = useContext(Context);
     let location = useLocation();
     const [taco, settaco] = useState({});
     let history = useHistory();
@@ -37,17 +38,27 @@ export const Taco = () => {
         settaco({ ...taco, status });
         await tacoService.updateTaqueriaStatus(taco.id, status);
     }
+    const setEdit = () => {
+        taqueria.dispatch({ type: "EDIT_TACO", payload: { taco } });
+        history.push(`${location.pathname}/update`)
+    }
     return (
-        <div className='taco_page'>
-            <PageControl />
-            <div className='taco_page_img'>
+        <div className='taco_page text-white'>
+            <PageControl>
+                {user && user.id === taco.userId ? <PencilSquare color="white" size={24} onClick={setEdit} /> : null}
+            </PageControl>
+            {/* <div className='taco_page_img'>
                 <img src={placeHolder} />
-            </div>
+            </div> */}
             <h3>{taco.name}</h3>
             <p>{taco.description}</p>
-            {user && user.id === taco.userId ? <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} /> : null}
+            {user && user.id === taco.userId ? <div className='w-100'>
+                <label className='w-100'>Status</label>
+                <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} />
+            </div> : null
+            }
             {/* <Button>View Menu</Button>
             <Button>Get Directions</Button> */}
-        </div>
+        </div >
     )
 }

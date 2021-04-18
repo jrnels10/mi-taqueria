@@ -3,16 +3,12 @@ import { EmojiWinkFill } from 'react-bootstrap-icons';
 import { Marker, Popup, useMap, useMapEvent } from 'react-leaflet';
 import { PopupQuestion, TaqueriaPopup } from './Popups';
 import L from 'leaflet';
-import TacoIcon from './../../Style/Images/taco.png';
+import openTaco from './../../Style/Images/taco_open.png';
+import openClosed from './../../Style/Images/taco_closed.png';
 import { useHistory } from 'react-router-dom';
 import { Context } from "../../Utils/Context";
 import PersonFill from './../../Style/Images/PersonFill.svg'
-let DefaultIcon = L.icon({
-    iconUrl: TacoIcon,
-    iconSize: '30',
-    className: 'test'
-});
-L.Marker.prototype.options.icon = DefaultIcon;
+
 const iconPerson = new L.Icon({
     iconUrl: PersonFill,
     iconRetinaUrl: PersonFill,
@@ -25,12 +21,21 @@ const iconPerson = new L.Icon({
     // iconSize: new L.Point(60, 75),
     // className: 'leaflet-div-icon'
 });
-export function TestMarker(props) {
-    const { taco } = props;
-    console.log(props)
-    // const newLat = taco.latitude + .2
-    return <Marker position={[taco.latitude, taco.longitude]}></Marker>
-}
+
+const tacoIcon = ({ status, className }) => new L.Icon({
+    iconUrl: status === 'OPEN' ? openTaco : openClosed,
+    iconRetinaUrl: status === 'OPEN' ? openTaco : openClosed,
+    iconAnchor: null,
+    iconSize: '35',
+    popupAnchor: null,
+    shadowUrl: null,
+    shadowSize: null,
+    shadowAnchor: null,
+    className
+    // iconSize: new L.Point(60, 75),
+    // className: 'leaflet-div-icon'
+});
+
 export function UserMarker() {
     const { user } = useContext(Context);
     const [position, setPosition] = useState(user.location);
@@ -38,52 +43,54 @@ export function UserMarker() {
     const map = useMap();
 
 
-    map.locate().on("locationfound", function (e) {
-        if (!position) {
-            // debugger
-            setPosition(e.latlng);
-            map.flyTo(e.latlng, 12);
-        }
-        // const radius = e.accuracy;
-        // const circle = L.circle(e.latlng, radius);
-        // circle.addTo(map);
-        // setBbox(e.bounds.toBBoxString().split(","));
-    });
-
     useEffect(() => {
-
         if (position && user.location === null) {
             user.dispatch({ type: "SET_USER_LOCATION", payload: { location: position } })
+        }
+        else if (!position) {
+            map.locate().on("locationfound", function (e) {
+                setPosition(e.latlng);
+                map.setView(e.latlng, 12);
+                //     }
+                //     // const radius = e.accuracy;
+                //     // const circle = L.circle(e.latlng, radius);
+                //     // circle.addTo(map);
+                //     // setBbox(e.bounds.toBBoxString().split(","));
+            });
+
         }
         return () => null
     }, [position])
     return position === null ? null : (
         <Marker position={position} icon={iconPerson} >
-            <Popup>
+            {/* <Popup>
                 You are here. <br />
           Map bbox: <br />
                 <b>Southwest lng</b>: {bbox[0]} <br />
                 <b>Southwest lat</b>: {bbox[1]} <br />
                 <b>Northeast lng</b>: {bbox[2]} <br />
                 <b>Northeast lat</b>: {bbox[3]}
-            </Popup>
+            </Popup> */}
         </Marker>
     );
 }
 export function TaqueriaMarker(props) {
     const { taco, selectTaco } = props;
-    const { taqueria } = useContext(Context);
-
+    const { taqueria: { dispatch, searchList } } = useContext(Context);
     const markerRef = useRef();
-    const history = useHistory();
+    const foundTaco = searchList.length ? searchList.find(s => s.id === taco.id) ? 'searchTrue' : 'searchFalse' : '';
     return <Marker
-        // opacity={taco.status === 'OPEN' ? 1 : .5}
+        icon={tacoIcon({ status: taco.status, className: foundTaco })}
         position={[taco.latitude, taco.longitude]}
         ref={markerRef}
         eventHandlers={{
             click: () => {
-                selectTaco(taco);
-                taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: taco } });
+                selectTaco(null);
+                dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } });
+                setTimeout(() => {
+                    selectTaco(taco);
+                    dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: taco } });
+                }, 100)
             }
         }} >
         {/* <TaqueriaPopup data={taco} /> */}
@@ -94,8 +101,10 @@ export function TaqueriaMarker(props) {
 export function SuggestedMarker(props) {
     const { suggested } = props;
     const map = useMap();
-    const [position, setPosition] = useState(suggested);
+    const { mapboxService, taqueria } = useContext(Context);
+    const [position, setPosition] = useState(suggested ? suggested : [taqueria.latitude, taqueria.longitude]);
 
+    console.log('suggested')
     const initMarker = (ref) => {
         if (ref) {
             setTimeout(() => {
@@ -103,6 +112,11 @@ export function SuggestedMarker(props) {
             }, 2000);
         }
     };
+    useMapEvent("click", async (e) => {
+        console.log(e);
+        setPosition([e.latlng.lat, e.latlng.lng]);
+
+    });
     useEffect(() => {
         console.log(suggested);
         if (suggested) {
@@ -117,10 +131,14 @@ export function SuggestedMarker(props) {
     );
 }
 export function LocationMarker() {
-    const [position, setPosition] = useState(null);
-    useMapEvent("click", (e) => {
+    const { mapboxService, taqueria } = useContext(Context);
+    const [position, setPosition] = useState(taqueria.latitude ? [taqueria.latitude, taqueria.longitude] : null);
+
+
+    useMapEvent("click", async (e) => {
         console.log(e);
         setPosition([e.latlng.lat, e.latlng.lng]);
+
     });
     const initMarker = (ref) => {
         if (ref) {
@@ -129,6 +147,7 @@ export function LocationMarker() {
             }, 500);
         }
     };
+    console.log('testiong')
     return position === null ? null : (
         <Marker ref={initMarker} position={position}>
             <PopupQuestion latlng={position} />

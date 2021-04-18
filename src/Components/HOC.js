@@ -12,7 +12,6 @@ export const Authenticated = ({ component: Component, auth, redirectTo, ...rest 
     const { authService, user } = useContext(Context);
     const [usePayload, setusePayload] = useState(false)
     let location = useLocation();
-    console.log(location)
     useEffect(() => {
         const fetch = async () => {
             const loggedUser = await authService.signInToken();

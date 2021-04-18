@@ -28,7 +28,9 @@ class TaqueriaService extends BaseHttpService {
   updateTaqueriaStatus(id, status) {
     return this.patch(`taqueria/${id}/status`, { status });
   }
-
+  updateTaqueria(taco) {
+    return this.patch(`taqueria/${taco.id}`, { ...taco });
+  }
   createTaqueria(taqueria) {
     return this.post(`taqueria`, { ...taqueria });
   }

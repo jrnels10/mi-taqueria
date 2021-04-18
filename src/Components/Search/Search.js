@@ -1,25 +1,35 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
-import { FilterRight, FilterSquareFill } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { FilterRight, XSquareFill } from 'react-bootstrap-icons';
+import { Link, useHistory } from 'react-router-dom';
 import { Context } from '../../Utils/Context';
 import './Search.scss';
 
 export const TaqueriaSearch = ({ children }) => {
     const { tacoService, taqueria } = useContext(Context);
-    const [searchValue, setsearchValue] = useState(taqueria.searchValue)
+    const [searchValue, setsearchValue] = useState(taqueria.searchValue);
+    let history = useHistory();
     const searchBy = async e => {
         setsearchValue(e.target.value)
-        // if (e.target.value.length > 1) {
         const res = await tacoService.getTaqueria({ search: e.target.value });
         taqueria.dispatch({
             type: "SEARCHLIST",
             payload: { searchValue: e.target.value, searchList: [...res.data] },
         });
-        // }
+    }
+    const closeSearch = () => {
+        taqueria.dispatch({
+            type: "SEARCHLIST",
+            payload: { searchValue: '', searchList: [] },
+        });
+        history.push('/map')
     }
     return <div className='taco_search'>
+        <div className='taco_search_filter--icon'>
+            <FilterRight color="white" size={25} />
+        </div>
         <Form.Control
+            autoFocus
             className='taco_search_input'
             name="search"
             type="text"
@@ -27,8 +37,8 @@ export const TaqueriaSearch = ({ children }) => {
             value={searchValue}
             onChange={searchBy}
         />
-        <div className='taco_search_filter--icon'>
-            <FilterRight color="white" size={25} />
+        <div className='taco_search_filter--icon-close' onClick={closeSearch}>
+            <XSquareFill color="#515156" size={30} />
         </div>
         <div className='taco_search_by'>
             <ButtonGroup>

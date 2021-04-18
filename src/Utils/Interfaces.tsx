@@ -18,6 +18,7 @@ export interface User {
 export interface Taqueria {
   id: number;
   name: string;
+  daysOfTheWeek: string;
   description: string;
   latitude: number;
   longitude: number;

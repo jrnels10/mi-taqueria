@@ -13,7 +13,12 @@ export default class MapboxService extends BaseHttpService {
 
     async getAddressFromLatLng({ latlng, options = {} }) {
         Object.assign(options, this._getCommonOptions());
-        return axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${latlng[0]},${latlng[1]}.json?access_token=pk.eyJ1IjoianJuZWxzMTAiLCJhIjoiY2ticjNwdXR4MXlpcTJ5dG1rdjF4MDdxeSJ9.tiUpLiArSzx6thNUgPOL-w`)
+        return axios.get(`https://api.mapbox.com/geocoding/v5/mapbox.places/${latlng.lng},${latlng.lat}.json?access_token=pk.eyJ1IjoianJuZWxzMTAiLCJhIjoiY2ticjNwdXR4MXlpcTJ5dG1rdjF4MDdxeSJ9.tiUpLiArSzx6thNUgPOL-w`)
+    }
+
+    async getDirections({ start, end, options = {} }) {
+        Object.assign(options, this._getCommonOptions());
+        return axios.get(`https://api.mapbox.com/directions/v5/mapbox/driving/${start.lng},${start.lat};${end.lng},${end.lat}?geometries=geojson&access_token=pk.eyJ1IjoianJuZWxzMTAiLCJhIjoiY2ticjNwdXR4MXlpcTJ5dG1rdjF4MDdxeSJ9.tiUpLiArSzx6thNUgPOL-w`)
     }
     // async deleteTask(id) {
     //   await this.delete(`tasks/${id}`);

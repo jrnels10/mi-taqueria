@@ -11,8 +11,26 @@ const taqueriaReducer = (state, action) => {
     case "CREATE":
       return {
         ...state,
-        taqueria: action.payload.taqueria
+        taqueria: action.payload ? action.payload.taqueria : {
+          ...state.taqueria,
+          id: 0,
+          name: "",
+          description: "",
+          latitude: 0,
+          longitude: 0,
+          update: false
+        }
       };
+
+    case "EDIT_TACO":
+      return {
+        ...state,
+        taqueria: {
+          ...state.taqueria,
+          ...action.payload.taco,
+          ...{ update: true }
+        }
+      }
     case "SUGGESTED_LOCATION":
       return {
         ...state,
@@ -63,6 +81,14 @@ const mapReducer = (state, action) => {
           mapZoom: action.payload.mapZoom
         }
       }
+    case "SET_MAP_DIRECTIONS":
+      return {
+        ...state,
+        tacoMap: {
+          ...state.tacoMap,
+          directions: action.payload.directions
+        }
+      }
 
     default:
       return state;
@@ -103,6 +129,7 @@ class Provider extends Component {
     tacoMap: {
       mapLocation: [33.3, -112.2],
       mapZoom: 11,
+      directions: null,
       dispatch: action => this.setState(state => mapReducer(state, action))
     },
     taqueria: {
@@ -111,6 +138,7 @@ class Provider extends Component {
       description: "",
       latitude: 0,
       longitude: 0,
+      daysOfTheWeek: '',
       selectTaco: null,
       timeOpen: new Date(),
       timeClose: new Date(),
@@ -119,8 +147,9 @@ class Provider extends Component {
       searchList: [],
       searchValue: '',
       setLocate: false,
+      update: false,
       dispatch: action => this.setState(state => taqueriaReducer(state, action))
-    },
+    }
   };
   render() {
     return (

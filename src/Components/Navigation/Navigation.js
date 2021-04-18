@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { Button, Form, FormControl, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
-import { GeoAltFill, House, PersonCircle, Pencil, ArrowLeftCircle, Search, Star } from 'react-bootstrap-icons';
+import { GeoAltFill, House, PersonCheckFill, PersonCircle, Pencil, ArrowLeftCircle, Search, Star, BoxArrowInRight } from 'react-bootstrap-icons';
 import './Navigation.scss'
 import { Context } from "../../Utils/Context";
 
@@ -23,7 +23,7 @@ const Navigation = () => {
             <Star color="white" size={20} />
         </Link>
         <Link to="/map"><GeoAltFill color="white" size={20} /></Link>
-        <Link to="/user/owner">
+        <Link to="/user/profile">
             <PersonCircle color="white" size={20} />
         </Link>
     </Navbar>
@@ -32,14 +32,22 @@ const Navigation = () => {
 export default withRouter(Navigation);
 
 
-export const PageControl = () => {
-    const { user } = useContext(Context);
+export const PageControl = ({ children }) => {
+    const { authService } = useContext(Context);
     let history = useHistory();
+    const handleSignout = () => {
+        authService.signout();
+        history.push('/')
+    }
     return <div className='page_control p-1'>
-        <ArrowLeftCircle color="white" size={24} onClick={() => history.goBack()} />
+        <ArrowLeftCircle className='page_control_goBack' color="white" size={24} onClick={() => history.goBack()} />
         {/* {user && user.id === taco.userId ? <Link to={{
             pathname: `/taco/${taco.id}/update`,
             query: { taco }
         }}><Pencil color="white" size={20} /></Link> : null} */}
+        <div className='children_wrapper'>
+            {children}
+        </div>
+        <BoxArrowInRight className='page_control_signOut' color="white" size={24} onClick={handleSignout} />
     </div>
 }

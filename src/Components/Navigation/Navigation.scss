@@ -13,4 +13,19 @@
 
 .page_control {
   height: 40px;
+  &_goBack {
+    float: left;
+  }
+
+  &_signOut {
+    float: right;
+  }
+
+  .children_wrapper {
+    width: 86%;
+    float: left;
+    margin: auto;
+    text-align: center;
+    padding: 0px 10px;
+  }
 }

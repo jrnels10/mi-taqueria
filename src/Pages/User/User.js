@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
 import { ListCard } from '../List/List'
 import { useContext, useEffect, useState } from 'react';
 import { Context } from '../../Utils/Context';
+import { Button } from 'react-bootstrap';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { PageControl } from '../../Components/Navigation/Navigation';
 
 export const User = () => {
-    const { user, tacoService } = useContext(Context);
-    console.log(user, tacoService)
+    const { user, tacoService, taqueria } = useContext(Context);
     const [myTacos, setmyTacos] = useState([])
     useEffect(() => {
         const fetchTaco = async () => {
@@ -22,11 +23,20 @@ export const User = () => {
         fetchTaco();
         return () => null
     }, [])
+    // let { path } = useRouteMatch();
+    const create = () => {
+        taqueria.dispatch({ type: 'CREATE' })
+    }
     return (
-        <div>
-            user
+        <div className='h-100 w-100 p-1 position-relative' >
+            <PageControl>
+
+            </PageControl>
+            <Link to={`/user/createtaco`}>
+                <Button className='w-75 m-auto position-relative' variant="light" onClick={create}>Create Taqueria</Button>
+            </Link>
             {
-                myTacos.map(taco => <ListCard taco={taco} />)
+                myTacos.map(taco => <ListCard key={taco.id} taco={taco} />)
             }
         </div>
     )
