@@ -137,14 +137,6 @@ const TacoCard = () => {
         taqueria,
         taqueria: { selectTaco },
     } = useContext(Context);
-    // const getDirections = async () => {
-    //     const res = await mapboxService.getDirections({
-    //         start: user.location,
-    //         end: { lat: selectTaco.latitude, lng: selectTaco.longitude }
-    //     });
-    //     console.log(res)
-    //     debugger
-    // }
     return <AnimatePresence>{selectTaco ? <motion.div
         initial={{ bottom: '-100px' }}
         animate={{ bottom: '10px' }}

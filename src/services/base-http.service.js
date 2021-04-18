@@ -1,6 +1,6 @@
 import axios from 'axios';
 export default class BaseHttpService {
-  BASE_URL = 'https://mi-taqueria-api.herokuapp.com';
+  BASE_URL = process.env.REACT_APP_API;
   _accessToken = null;
 
   constructor(props) {
