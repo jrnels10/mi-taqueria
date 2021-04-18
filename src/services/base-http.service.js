@@ -1,6 +1,6 @@
 import axios from 'axios';
 export default class BaseHttpService {
-  BASE_URL = 'http://localhost:5000';
+  BASE_URL = process.env.REACT_APP_API;
   _accessToken = null;
 
   constructor(props) {

@@ -1,27 +1,22 @@
 import { Home } from "./Pages/Home";
 import { Signin, Signup } from "./Pages/Home/Signin";
 import { Container } from "react-bootstrap";
-import Navigation, { PageControl } from "./Components/Navigation/Navigation";
+import Navigation from "./Components/Navigation/Navigation";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Redirect
+  Route
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import Provider, { Consumer } from "./Utils/Context";
-import { useHistory } from 'react-router-dom';
-import BaseHttpService from "./services/base-http.service";
 import { Map } from "./Pages/Map/Map";
 import Favorites from "./Pages/Favorites";
-import { Authenticated, AuthenticatedOwner } from "./Components/HOC";
+import { Authenticated } from "./Components/HOC";
 import { List } from "./Pages/List/List";
-import { TaqueriaSearch } from "./Components/Search/Search";
 import { User } from "./Pages/User/User";
 import { Taco } from "./Pages/Taco/Taco";
 import CreateTaco from "./Pages/Taqueria/CreateTaco";
-import { LeafletConsumer } from 'react-leaflet';
 
 
 export const App = () => {
