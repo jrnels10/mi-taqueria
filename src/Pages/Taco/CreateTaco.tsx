@@ -27,6 +27,7 @@ const CreateTaco = (props: any) => {
         ...taqueria,
         ...formValues,
       };
+      console.log(taco);
       taqueria.update
         ? tacoService.updateTaqueria(taco)
         : tacoService.createTaqueria(taco);
@@ -44,19 +45,13 @@ const CreateTaco = (props: any) => {
       payload: { taqueria: { ...taqueria, [e.target.name]: e.target.value } },
     });
   };
-  // const setTimePicker = (time: any, name: string) => {
-  //   taqueria.dispatch({
-  //     type: "CREATE",
-  //     payload: { taqueria: { ...taqueria, [name]: time } },
-  //   });
-  // };
-  console.log(taqueria);
+
   return (
-    <Container className="sign text-white">
+    <Container className="taco_page text-white">
       <div>{headerMessage}</div>
       <br />
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group controlId="formBasicEmail">
+        <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control
             name="name"
@@ -66,9 +61,6 @@ const CreateTaco = (props: any) => {
             value={taqueria.name}
             onChange={(e) => constructTaco(e)}
           />
-          {/* <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text> */}
         </Form.Group>
 
         <Form.Group controlId="formBasicDescription">
@@ -83,6 +75,15 @@ const CreateTaco = (props: any) => {
             ref={register}
             onChange={(e) => constructTaco(e)}
           />
+        </Form.Group>
+        <Form.Group controlId="formBasicLocation">
+          {/* <Form.File
+            id="exampleFormControlFile1"
+            name="file"
+            type="file"
+            ref={register}
+            label="Image of Taqueria"
+          /> */}
         </Form.Group>
         <Form.Group controlId="formBasicLocation">
           <GeoAddress setheaderMessage={setheaderMessage} />

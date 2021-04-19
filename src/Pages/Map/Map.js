@@ -2,8 +2,8 @@ import React, { useRef, useEffect, useContext, useState } from "react";
 import {
     MapContainer,
     TileLayer,
-    useMap,
-    MapConsumer
+    useMapEvents,
+    useMap
 } from "react-leaflet";
 import {
     Link,
@@ -17,10 +17,9 @@ import { Context } from "../../Utils/Context";
 import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
-import { XCircleFill } from "react-bootstrap-icons";
-import L from 'leaflet';
-import { Button } from "react-bootstrap";
-import { Directions, DirectionsLine } from "../../Components/DIrections/DIrections";
+import { ArrowRight, ArrowRightCircleFill, XCircleFill } from "react-bootstrap-icons";
+// import L from 'leaflet';
+import { DirectionsLine } from "../../Components/DIrections/DIrections";
 
 
 
@@ -78,7 +77,7 @@ export const Map = () => {
                     url={`https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=${process.env.REACT_APP_MAPBOX}`}
                 />
                 <DirectionsLine />
-                {tacoMap.directions ? <MapEvents /> : null}
+                <MapEvents />
                 <UserMarker />
                 {taquerias.map((taco) => <TaqueriaMarker key={taco.id} taco={taco} selectTaco={setSelectTaco} />)}
                 {!suggestedLocation && location.pathname.includes('createtaco') ? <LocationMarker /> : null}
@@ -97,21 +96,21 @@ export const Map = () => {
 };
 function MapEvents(props) {
     const map = useMap();
-    const { tacoMap } = useContext(Context);
+    const { tacoMap, taqueria } = useContext(Context);
     // map.locate().on("locationfound", e => {
     //     map.flyTo(e.latlng, 12);
     // });
     // console.log(map.getZoom())
-    // const mapEvents = useMapEvents({
-    //     click: () => {
-    //         mapEvents.locate()
-    //     },
-    //     locationfound: (location) => {
-    //         console.log('location found:', location)
-    //         map.flyTo(location.latlng, map.getZoom())
-    //         setUserLocation([location.latitude, location.longitude])
-    //     },
-    // })
+    useMapEvents({
+        click: () => {
+            taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } });
+        },
+        //     locationfound: (location) => {
+        //         console.log('location found:', location)
+        //         map.flyTo(location.latlng, map.getZoom())
+        //         setUserLocation([location.latitude, location.longitude])
+        //     },
+    })
     const val = useRef();
     useEffect(
         () => {
@@ -132,8 +131,6 @@ const transition = {
 }
 const TacoCard = () => {
     const {
-        user,
-        mapboxService,
         taqueria,
         taqueria: { selectTaco },
     } = useContext(Context);
@@ -157,11 +154,14 @@ const TacoCard = () => {
                 </label>
             </div>
         </Link>
-        <label className='close' onClick={() => taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } })}>
+        {/* <label className='close' onClick={() => taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } })}>
             <XCircleFill />
+        </label> */}
+        <label className='get_directions'>
+            <ArrowRightCircleFill />
         </label>
-        <div className='direction_container'>
+        {/* <div className='direction_container'>
             <Directions />
-        </div>
+        </div> */}
     </motion.div> : null}</AnimatePresence>
 }

@@ -5,6 +5,7 @@ export default class BaseHttpService {
 
   constructor(props) {
     this.history = props.history;
+    this.errorHandler = props.errorHandler;
   }
 
   async get(endpoint, options = {}) {
@@ -33,11 +34,15 @@ export default class BaseHttpService {
 
   _handleHttpError(error) {
     const { statusCode } = error.response.data;
-
+    if (error.response.data.message) {
+      const { message } = error.response.data;
+      this.errorHandler.dispatch({ type: 'SET_MESSAGE', payload: { message } })
+    }
     if (statusCode !== 401) {
       throw error;
     } else {
-      return this._handle401();
+      this._handle401();
+      throw error;
     }
   }
 

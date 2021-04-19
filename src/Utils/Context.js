@@ -7,6 +7,7 @@ import AuthService from "../services/auth.service";
 
 export const Context = React.createContext();
 const taqueriaReducer = (state, action) => {
+  state.errorHandler.message = null
   switch (action.type) {
     case "CREATE":
       return {
@@ -71,6 +72,7 @@ const taqueriaReducer = (state, action) => {
   }
 };
 const mapReducer = (state, action) => {
+  state.errorHandler.message = null
   switch (action.type) {
     case "SET_MAP_LOCATION":
       return {
@@ -95,6 +97,7 @@ const mapReducer = (state, action) => {
   }
 }
 const userReducer = (state, action) => {
+  state.errorHandler.message = null
   switch (action.type) {
 
     case "SET_USER":
@@ -103,6 +106,19 @@ const userReducer = (state, action) => {
         user: {
           ...state.user,
           ...action.payload.user
+        }
+      }
+    case "SIGNOUT_USER":
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          email: "",
+          firstName: "",
+          id: null,
+          lastName: "",
+          taquerias: [],
+          location: null,
         }
       }
     case "SET_USER_LOCATION":
@@ -117,12 +133,32 @@ const userReducer = (state, action) => {
       return state;
   }
 };
+const errorReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_MESSAGE":
+      return {
+        ...state,
+        errorHandler: {
+          ...state.errorHandler,
+          message: Array.isArray(action.payload.message) ? action.payload.message : [action.payload.message]
+        }
+      }
+    default:
+      return state;
+  }
+};
 class Provider extends Component {
-  authService = new AuthService({ history: this.props.history });
-  tacoService = new TaqueriaService({ history: this.props.history });
-  mapboxService = new MapboxService({ history: this.props.history });
   state = {
+    errorHandler: {
+      message: null,
+      dispatch: action => this.setState(state => errorReducer(state, action))
+    },
     user: {
+      email: "",
+      firstName: "",
+      id: null,
+      lastName: "",
+      taquerias: [],
       location: null,
       dispatch: action => this.setState(state => userReducer(state, action))
     },
@@ -151,7 +187,11 @@ class Provider extends Component {
       dispatch: action => this.setState(state => taqueriaReducer(state, action))
     }
   };
+  authService = new AuthService({ history: this.props.history, errorHandler: this.state.errorHandler });
+  tacoService = new TaqueriaService({ history: this.props.history });
+  mapboxService = new MapboxService({ history: this.props.history });
   render() {
+    console.log(this.state)
     return (
       <Context.Provider
         value={{

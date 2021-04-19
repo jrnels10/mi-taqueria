@@ -7,12 +7,13 @@ import { Context } from "../../Utils/Context";
 import { Link } from "react-router-dom";
 
 export const Signin: React.FC = (props: any) => {
-  const { authService, user } = useContext(Context);
+  const { authService, user, errorHandler } = useContext(Context);
   const { register, handleSubmit } = useForm<RegistrationUserData>();
   const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signin(formValues.email, formValues.password);
     if (res.status === 201) {
       user.dispatch({ type: "SET_USER", payload: { user: res.data.user } });
+
       if (props.location.query && props.location.query.prevPath) {
         props.history.push(props.location.query.prevPath);
       } else {
@@ -20,7 +21,6 @@ export const Signin: React.FC = (props: any) => {
       }
     }
   }, []);
-  console.log(props);
   return (
     <Container className="sign text-white">
       <div className="sign_message">
@@ -46,6 +46,11 @@ export const Signin: React.FC = (props: any) => {
             placeholder="Password"
             ref={register}
           />
+          {errorHandler.message
+            ? errorHandler.message.map((m: string) => (
+                <Form.Text className="text-danger">{m.concat(".")}</Form.Text>
+              ))
+            : null}
           <Form.Text className="text-muted">
             Don't have an account? Sign up <Link to="signup">here</Link>.
           </Form.Text>

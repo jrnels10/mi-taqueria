@@ -16,7 +16,7 @@ import { Authenticated } from "./Components/HOC";
 import { List } from "./Pages/List/List";
 import { User } from "./Pages/User/User";
 import { Taco } from "./Pages/Taco/Taco";
-import CreateTaco from "./Pages/Taqueria/CreateTaco";
+import CreateTaco from "./Pages/Taco/CreateTaco";
 
 
 export const App = () => {

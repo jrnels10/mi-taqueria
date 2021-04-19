@@ -36,6 +36,7 @@ export const Taco = () => {
     const setStatus = async () => {
         const status = taco.status === 'CLOSED' ? 'OPEN' : 'CLOSED';
         settaco({ ...taco, status });
+        taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: { ...taco, status } } });
         await tacoService.updateTaqueriaStatus(taco.id, status);
     }
     const setEdit = () => {

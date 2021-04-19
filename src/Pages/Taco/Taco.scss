@@ -1,4 +1,6 @@
 .taco_page {
+  height: 100%;
+  overflow-y: auto;
   &_img {
     height: 30vh;
     img {

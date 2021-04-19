@@ -2,13 +2,14 @@ import { useContext } from 'react';
 import { Context } from "../../Utils/Context";
 import {
     Link,
-    Route,
-    useRouteMatch,
+    Route
 } from "react-router-dom";
 import { TaqueriaSearch } from '../../Components/Search/Search';
 import tacoImg from './../../Style/Images/taco.png'
+import { GeoAltFill } from 'react-bootstrap-icons';
 import './List.scss';
-import { GeoAltFill, Star, StarFill } from 'react-bootstrap-icons';
+
+
 export const List = () => {
     return (
         <Route path="/list/searchtaco">
@@ -45,13 +46,6 @@ export const ListCard = ({ taco }) => {
             <div className='taco_data'>
                 <label className='taco_data_label'>
                     <p>{name}</p>
-                    <label className='star_container'>
-                        <StarFill color='#d4c202' size={12} />
-                        <StarFill color='#d4c202' size={12} />
-                        <StarFill color='#d4c202' size={12} />
-                        <Star color='#d4c202' size={12} />
-                        <Star color='#d4c202' size={12} />
-                    </label>
                 </label>
                 <label className='taco_data_status'>
                     <span className={`status status--${status}`}>{status.toLowerCase()}</span>

@@ -25,7 +25,7 @@
 }
 
 .select_taco {
-  height: 75px;
+  height: 60px;
   width: 90%;
   background: #3f3f3f;
   position: absolute;
@@ -58,7 +58,8 @@
     }
   }
 
-  .close {
+  .close,
+  .get_directions {
     position: relative;
     margin: 0;
     margin-top: 3px;
