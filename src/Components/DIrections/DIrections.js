@@ -1,14 +1,14 @@
 import React, { useRef, useEffect, useContext, useState } from "react";
 import { Polyline } from "react-leaflet";
-import { Context } from "../../Utils/Context";
+import { MapContext } from "../../Utils/Contexts/MapContext";
+import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
+import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Directions.scss';
 export const Directions = () => {
-    const {
-        user,
-        mapboxService,
-        tacoMap,
-        taqueria: { selectTaco },
-    } = useContext(Context);
+    const { user, } = useContext(UserContext);
+    const { mapboxService, tacoMap, } = useContext(MapContext);
+    const { taqueria: { selectTaco }, } = useContext(TaqueriaContext);
+
     const getDirections = async () => {
         const res = await mapboxService.getDirections({
             start: user.location,
@@ -23,7 +23,8 @@ export const Directions = () => {
 }
 
 export const DirectionsLine = () => {
-    const { tacoMap, taqueria: { selectTaco }, } = useContext(Context);
+    const { mapboxService, tacoMap, } = useContext(MapContext);
+    const { taqueria: { selectTaco }, } = useContext(TaqueriaContext);
     useEffect(() => {
         if (!selectTaco) {
             tacoMap.dispatch({ type: 'SET_MAP_DIRECTIONS', payload: { directions: null } });

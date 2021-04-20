@@ -1,12 +1,14 @@
 import { ListCard } from '../List/List'
 import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../Utils/Context';
+import { Context, UserContext } from '../../Utils/Contexts/UserContext';
 import { Button } from 'react-bootstrap';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { PageControl } from '../../Components/Navigation/Navigation';
+import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 
 export const User = () => {
-    const { user, tacoService, taqueria } = useContext(Context);
+    const { user } = useContext(UserContext);
+    const { tacoService, taqueria } = useContext(TaqueriaContext);
     const [myTacos, setmyTacos] = useState([])
     useEffect(() => {
         const fetchTaco = async () => {

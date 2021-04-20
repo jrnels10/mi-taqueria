@@ -2,27 +2,28 @@ import React, { useState, useCallback, useContext } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
 import { FilterRight, XSquareFill } from 'react-bootstrap-icons';
 import { Link, useHistory } from 'react-router-dom';
-import { Context } from '../../Utils/Context';
+import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
+import { Context } from '../../Utils/Contexts/UserContext';
 import './Search.scss';
 
 export const TaqueriaSearch = ({ children }) => {
-    const { tacoService, taqueria } = useContext(Context);
+    const { tacoService, taqueria } = useContext(TaqueriaContext);
     const [searchValue, setsearchValue] = useState(taqueria.searchValue);
     let history = useHistory();
     const searchBy = async e => {
         setsearchValue(e.target.value)
-        const res = await tacoService.getTaqueria({ search: e.target.value });
+        const res = await tacoService.getTaqueria({ search: e.target.value.toLowerCase() });
         taqueria.dispatch({
             type: "SEARCHLIST",
             payload: { searchValue: e.target.value, searchList: [...res.data] },
         });
     }
-    const closeSearch = () => {
+    const clearSearch = () => {
+        setsearchValue('')
         taqueria.dispatch({
             type: "SEARCHLIST",
             payload: { searchValue: '', searchList: [] },
         });
-        history.push('/map')
     }
     return <div className='taco_search'>
         <div className='taco_search_filter--icon'>
@@ -37,7 +38,7 @@ export const TaqueriaSearch = ({ children }) => {
             value={searchValue}
             onChange={searchBy}
         />
-        <div className='taco_search_filter--icon-close' onClick={closeSearch}>
+        <div className='taco_search_filter--icon-close' onClick={clearSearch}>
             <XSquareFill color="#515156" size={30} />
         </div>
         <div className='taco_search_by'>
@@ -52,5 +53,5 @@ export const TaqueriaSearch = ({ children }) => {
             </ButtonGroup>
         </div>
         {children}
-    </div>
+    </div >
 }

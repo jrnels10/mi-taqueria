@@ -6,8 +6,9 @@ import L from 'leaflet';
 import openTaco from './../../Style/Images/taco_open.png';
 import openClosed from './../../Style/Images/taco_closed.png';
 import { useHistory } from 'react-router-dom';
-import { Context } from "../../Utils/Context";
+import { Context, UserContext } from "../../Utils/Contexts/UserContext";
 import PersonFill from './../../Style/Images/PersonFill.svg'
+import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 
 const iconPerson = new L.Icon({
     iconUrl: PersonFill,
@@ -37,7 +38,7 @@ const tacoIcon = ({ status, className }) => new L.Icon({
 });
 
 export function UserMarker() {
-    const { user } = useContext(Context);
+    const { user } = useContext(UserContext);
     const [position, setPosition] = useState(user.location);
     const [bbox, setBbox] = useState([]);
     const map = useMap();
@@ -76,7 +77,7 @@ export function UserMarker() {
 }
 export function TaqueriaMarker(props) {
     const { taco, selectTaco } = props;
-    const { taqueria: { dispatch, searchList } } = useContext(Context);
+    const { taqueria: { dispatch, searchList } } = useContext(TaqueriaContext);
     const markerRef = useRef();
     const foundTaco = searchList.length ? searchList.find(s => s.id === taco.id) ? 'searchTrue' : 'searchFalse' : '';
     return <Marker
@@ -101,7 +102,7 @@ export function TaqueriaMarker(props) {
 export function SuggestedMarker(props) {
     const { suggested } = props;
     const map = useMap();
-    const { mapboxService, taqueria } = useContext(Context);
+    const { taqueria } = useContext(TaqueriaContext);
     const [position, setPosition] = useState(suggested ? suggested : [taqueria.latitude, taqueria.longitude]);
 
     console.log('suggested')
@@ -131,7 +132,7 @@ export function SuggestedMarker(props) {
     );
 }
 export function LocationMarker() {
-    const { mapboxService, taqueria } = useContext(Context);
+    const { taqueria } = useContext(TaqueriaContext);
     const [position, setPosition] = useState(taqueria.latitude ? [taqueria.latitude, taqueria.longitude] : null);
 
 

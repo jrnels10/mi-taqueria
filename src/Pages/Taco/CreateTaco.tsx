@@ -9,10 +9,10 @@ import {
 import { useForm } from "react-hook-form";
 import { Taqueria } from "../../Utils/Interfaces";
 import { withRouter } from "react-router";
-import { Context } from "../../Utils/Context";
-// import TimePicker from "react-time-picker";
 import { Link } from "react-router-dom";
 import { DaySelector } from "../../Components/Selectors";
+import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
+import { MapContext } from "../../Utils/Contexts/MapContext";
 
 const CreateTaco = (props: any) => {
   const { register, handleSubmit } = useForm<Taqueria>();
@@ -20,7 +20,7 @@ const CreateTaco = (props: any) => {
   const [headerMessage, setheaderMessage] = useState<string>(
     "Create new Taqueria"
   );
-  const { tacoService, taqueria } = useContext(Context);
+  const { tacoService, taqueria } = useContext(TaqueriaContext);
   const onSubmit = useCallback(
     async (formValues: Taqueria) => {
       const taco = {
@@ -125,8 +125,8 @@ const CreateTaco = (props: any) => {
 export default withRouter(CreateTaco);
 
 const GeoAddress = (props: any) => {
-  const { setheaderMessage } = props;
-  const { mapboxService, taqueria } = useContext(Context);
+  const { taqueria } = useContext(TaqueriaContext);
+  const { mapboxService } = useContext(MapContext);
   const [address, setAddress] = useState<string>("");
   const queryAddress = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();

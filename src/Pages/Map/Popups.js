@@ -1,9 +1,11 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
-import { Context } from "../../Utils/Context";
+import { Context } from "../../Utils/Contexts/UserContext";
 import { Popup } from "react-leaflet";
+import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
+
 export const PopupQuestion = (latlng) => {
-    const { mapboxService, taqueria } = useContext(Context);
+    const { taqueria } = useContext(TaqueriaContext);
     let history = useHistory();
     const confirmMarker = async (confirm) => {
         if (confirm) {

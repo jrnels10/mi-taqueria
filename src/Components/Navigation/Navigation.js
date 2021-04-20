@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { Navbar } from "react-bootstrap";
 import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
 import { GeoAltFill, House, PersonCircle, ArrowLeftCircle, Search, Star, BoxArrowInRight } from 'react-bootstrap-icons';
-import { Context } from "../../Utils/Context";
+import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Navigation.scss';
 
 const Navigation = () => {
@@ -30,7 +30,7 @@ export default withRouter(Navigation);
 
 
 export const PageControl = ({ children }) => {
-    const { authService, user } = useContext(Context);
+    const { authService, user } = useContext(UserContext);
     let history = useHistory();
     const handleSignout = () => {
         user.dispatch({ type: 'SIGNOUT_USER', payload: { user: null } })

@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { Context } from "../../Utils/Context";
 import {
     Link,
     Route
@@ -8,6 +7,7 @@ import { TaqueriaSearch } from '../../Components/Search/Search';
 import tacoImg from './../../Style/Images/taco.png'
 import { GeoAltFill } from 'react-bootstrap-icons';
 import './List.scss';
+import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 
 
 export const List = () => {
@@ -23,7 +23,7 @@ export const List = () => {
 }
 
 export const ListContainer = () => {
-    const { taqueria } = useContext(Context);
+    const { taqueria } = useContext(TaqueriaContext);
     return <div className='list_container'>
         <div className='list_container_options'>
             <label>{taqueria.searchList.length} place{taqueria.searchList.length > 1 ? 's' : ''} nearby</label>

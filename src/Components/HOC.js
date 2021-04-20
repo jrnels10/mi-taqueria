@@ -1,15 +1,15 @@
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { useContext, useEffect, useState } from 'react';
-import { Context } from '../Utils/Context';
+import { UserContext } from '../Utils/Contexts/UserContext';
 export const AuthenticatedOwner = ({ component: Component, auth, redirectTo, ...rest }) => {
-    const { user } = useContext(Context);
+    const { user } = useContext(UserContext);
     return <Route {...rest} render={(props) => (
         user.userType === 'OWNER' ? <Component {...props} />
             : <Redirect to={`${redirectTo ? redirectTo : '/signin'}`} />
     )} />
 }
 export const Authenticated = ({ component: Component, auth, redirectTo, ...rest }) => {
-    const { authService, user } = useContext(Context);
+    const { authService, user } = useContext(UserContext);
     const [usePayload, setusePayload] = useState(false)
     let location = useLocation();
     useEffect(() => {

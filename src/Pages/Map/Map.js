@@ -13,23 +13,21 @@ import {
 } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Mapindex.scss";
-import { Context } from "../../Utils/Context";
+import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
 import { ArrowRight, ArrowRightCircleFill, XCircleFill } from "react-bootstrap-icons";
 // import L from 'leaflet';
-import { DirectionsLine } from "../../Components/DIrections/DIrections";
+import { DirectionsLine } from "../../Components/Directions/Directions";
+import { MapContext } from "../../Utils/Contexts/MapContext";
+import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
 
 
 
 export const Map = () => {
-    const {
-        tacoMap,
-        tacoService,
-        taqueria,
-        taqueria: { suggestedLocation, setLocate, selectTaco, searchList },
-    } = useContext(Context);
+    const { tacoMap } = useContext(MapContext);
+    const { tacoService, taqueria, taqueria: { suggestedLocation, setLocate, selectTaco, searchList }, } = useContext(TaqueriaContext);
     const [taquerias, setTaquerias] = useState([]);
     const [selectedTaco, setSelectTaco] = useState(selectTaco);
     let { path } = useRouteMatch();
@@ -96,7 +94,8 @@ export const Map = () => {
 };
 function MapEvents(props) {
     const map = useMap();
-    const { tacoMap, taqueria } = useContext(Context);
+    const { tacoMap } = useContext(MapContext);
+    const { taqueria } = useContext(TaqueriaContext);
     // map.locate().on("locationfound", e => {
     //     map.flyTo(e.latlng, 12);
     // });
@@ -133,7 +132,7 @@ const TacoCard = () => {
     const {
         taqueria,
         taqueria: { selectTaco },
-    } = useContext(Context);
+    } = useContext(TaqueriaContext);
     return <AnimatePresence>{selectTaco ? <motion.div
         initial={{ bottom: '-100px' }}
         animate={{ bottom: '10px' }}

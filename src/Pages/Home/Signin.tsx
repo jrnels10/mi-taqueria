@@ -3,11 +3,11 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { RegistrationUserData } from "../../Utils/Interfaces";
 import AuthService from "../../services/auth.service";
-import { Context } from "../../Utils/Context";
+import { UserContext } from "../../Utils/Contexts/UserContext";
 import { Link } from "react-router-dom";
 
 export const Signin: React.FC = (props: any) => {
-  const { authService, user, errorHandler } = useContext(Context);
+  const { authService, user, errorHandler } = useContext(UserContext);
   const { register, handleSubmit } = useForm<RegistrationUserData>();
   const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signin(formValues.email, formValues.password);
@@ -64,7 +64,7 @@ export const Signin: React.FC = (props: any) => {
 };
 
 export const Signup: React.FC = (props: any) => {
-  const { authService } = useContext(Context);
+  const { authService } = useContext(UserContext);
   const { register, handleSubmit } = useForm<RegistrationUserData>();
   const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signup(formValues);

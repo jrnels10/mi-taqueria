@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../Utils/Context';
+import { UserContext } from '../../Utils/Contexts/UserContext';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import placeHolder from './../../Style/Images/y9DpT.jpg';
@@ -7,9 +7,11 @@ import './Taco.scss';
 import { Toggle } from '../../Components/Toggle';
 import { PageControl } from '../../Components/Navigation/Navigation';
 import { PencilSquare } from 'react-bootstrap-icons';
+import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 
 export const Taco = () => {
-    const { user, tacoService, taqueria } = useContext(Context);
+    const { user } = useContext(UserContext);
+    const { tacoService, taqueria } = useContext(TaqueriaContext);
     let location = useLocation();
     const [taco, settaco] = useState({});
     let history = useHistory();
