@@ -17,12 +17,9 @@ import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
 import { ArrowRightCircleFill } from "react-bootstrap-icons";
-
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
-import { DirectionsLine } from "../../Components/Directions/Route";
-
-
+import { DirectionsLine } from "../../Components/DIrections/Route";
 
 export const Map = () => {
     const { tacoMap } = useContext(MapContext);
