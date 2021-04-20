@@ -20,7 +20,7 @@ import { ArrowRightCircleFill } from "react-bootstrap-icons";
 
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
-import { DirectionsLine } from "../../Components/Directions/Directions";
+import { DirectionsLine } from "../../Components/Directions/Route";
 
 
 
