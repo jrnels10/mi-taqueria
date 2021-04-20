@@ -17,9 +17,10 @@ import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
 import { ArrowRightCircleFill } from "react-bootstrap-icons";
-import { DirectionsLine } from "../../Components/Directions/Directions";
+
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
+import { DirectionsLine } from "../../Components/Directions/Directions";
 
 
 
