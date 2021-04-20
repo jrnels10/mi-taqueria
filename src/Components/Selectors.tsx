@@ -1,7 +1,8 @@
-import React, { useCallback, useState, useContext } from "react";
+import { useState } from "react";
 import "./Selectors.scss";
+
 export const DaySelector = (props: any) => {
-  const { callBack, propsDays = [], customClassName = "" } = props;
+  const { callBack = () => null, propsDays = [], customClassName = "" } = props;
   const days = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   const [daysSelected, setdaysSelected] = useState<string[]>(propsDays);
   const selectDay = (name: string) => {
@@ -13,7 +14,7 @@ export const DaySelector = (props: any) => {
       days = [...daysSelected, name];
     }
     setdaysSelected(days);
-    callBack(days.join(","));
+    callBack(days);
   };
   return (
     <ul className={`daysOfOperation ${customClassName}`}>

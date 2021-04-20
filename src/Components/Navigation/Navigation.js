@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { Navbar } from "react-bootstrap";
 import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
 import { GeoAltFill, House, PersonCircle, ArrowLeftCircle, Search, Star, BoxArrowInRight } from 'react-bootstrap-icons';
@@ -6,15 +6,15 @@ import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Navigation.scss';
 
 const Navigation = () => {
-    // const { user } = useContext(Context);
+    const [search, setSearch] = useState(true)
     let location = useLocation();
     const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/list/searchtaco'
     return <Navbar bg="dark" className='nav' expand="lg">
         <Link to="/"><House color="white" size={20} /></Link>
         <Link to={{
-            pathname: searchLocationPath
+            pathname: search ? searchLocationPath : location.pathname.split('/searchtaco')[0]
         }} >
-            <Search color="white" size={20} />
+            <Search color="white" size={20} onClick={() => setSearch(!search)} />
         </Link>
         <Link to="/user/favorites">
             <Star color="white" size={20} />
@@ -23,7 +23,7 @@ const Navigation = () => {
         <Link to="/user/profile">
             <PersonCircle color="white" size={20} />
         </Link>
-    </Navbar>
+    </Navbar >
 };
 
 export default withRouter(Navigation);

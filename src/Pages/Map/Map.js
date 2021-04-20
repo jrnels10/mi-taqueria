@@ -13,12 +13,10 @@ import {
 } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Mapindex.scss";
-import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
-import { ArrowRight, ArrowRightCircleFill, XCircleFill } from "react-bootstrap-icons";
-// import L from 'leaflet';
+import { ArrowRightCircleFill } from "react-bootstrap-icons";
 import { DirectionsLine } from "../../Components/Directions/Directions";
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
@@ -49,14 +47,10 @@ export const Map = () => {
         }
         else if (!taquerias.length) {
             fetchTaquerias();
-            taqueria.dispatch({
-                type: "SEARCHLIST",
-                payload: { searchValue: '', searchList: [] },
-            });
         }
-        console.log(tacoMap)
         return () => { };
     }, [suggestedLocation, location, tacoMap]);
+
     return (
         <React.Fragment>
             <Route path={`${path}/searchtaco`}>

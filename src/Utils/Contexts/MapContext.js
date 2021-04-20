@@ -58,7 +58,6 @@ class MapProvider extends Component {
     };
     mapboxService = new MapboxService({ history: this.props.history, errorHandler: this.state.errorHandler });
     render() {
-        console.log(this.state)
         return (
             <MapContext.Provider
                 value={{

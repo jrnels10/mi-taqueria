@@ -43,20 +43,59 @@
   }
   &_by {
     position: absolute;
-    top: 40px;
-    left: 25vw;
+    width: 100vw;
     z-index: 1000;
+    top: 40px;
     width: 50vw;
-    margin-top: 5px;
-    height: 30px;
+    left: 25vw;
+    &--filters {
+      width: 100vw;
+      height: 60px;
+      left: 0;
+      background-color: rgb(81, 81, 86);
+      .filter_container {
+        height: 60px;
+      }
+      .btn-group {
+        left: 25vw;
+      }
+    }
     .btn-group {
-      width: 100%;
+      margin-top: 5px;
+      width: 50vw;
       a {
         width: 50%;
         .btn {
           width: 100%;
           filter: drop-shadow(0px 5px 5px rgba(0, 0, 0, 0.5));
         }
+      }
+    }
+  }
+
+  .filter_days {
+    width: 60%;
+    float: right;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    margin-top: 10px;
+    li {
+      height: 25px;
+      width: 25px;
+      span {
+        color: white;
+        position: absolute;
+        top: 42%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 0.8rem;
+      }
+    }
+    .day_true {
+      background-color: white;
+      span {
+        color: #343a40;
       }
     }
   }

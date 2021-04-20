@@ -94,11 +94,11 @@ const CreateTaco = (props: any) => {
           </Form.Label>
           <DaySelector
             propsDays={taqueria.daysOfTheWeek.split(",")}
-            callBack={(days: string) =>
+            callBack={(days: string[]) =>
               taqueria.dispatch({
                 type: "CREATE",
                 payload: {
-                  taqueria: { ...taqueria, daysOfTheWeek: days },
+                  taqueria: { ...taqueria, daysOfTheWeek: days.join(",") },
                 },
               })
             }

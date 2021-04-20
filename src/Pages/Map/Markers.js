@@ -105,7 +105,6 @@ export function SuggestedMarker(props) {
     const { taqueria } = useContext(TaqueriaContext);
     const [position, setPosition] = useState(suggested ? suggested : [taqueria.latitude, taqueria.longitude]);
 
-    console.log('suggested')
     const initMarker = (ref) => {
         if (ref) {
             setTimeout(() => {
@@ -114,12 +113,10 @@ export function SuggestedMarker(props) {
         }
     };
     useMapEvent("click", async (e) => {
-        console.log(e);
         setPosition([e.latlng.lat, e.latlng.lng]);
 
     });
     useEffect(() => {
-        console.log(suggested);
         if (suggested) {
             setPosition(suggested);
             map.flyTo([suggested[0], suggested[1]], 17);
@@ -137,7 +134,6 @@ export function LocationMarker() {
 
 
     useMapEvent("click", async (e) => {
-        console.log(e);
         setPosition([e.latlng.lat, e.latlng.lng]);
 
     });
@@ -148,7 +144,6 @@ export function LocationMarker() {
             }, 500);
         }
     };
-    console.log('testiong')
     return position === null ? null : (
         <Marker ref={initMarker} position={position}>
             <PopupQuestion latlng={position} />

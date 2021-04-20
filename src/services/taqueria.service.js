@@ -5,16 +5,19 @@ class TaqueriaService extends BaseHttpService {
   constructor(props) {
     super(props)
   }
-  async getTaqueria({ status = "", search }) {
+  async getTaqueria({ status = "", search, days }) {
     const queryObj = {};
 
     if (status && status.length) {
       queryObj.status = status;
     }
+    if (days && days.length) {
+      queryObj.days = days.join(',');
+    }
     if (search && search.length) {
       queryObj.search = search;
     }
-
+    console.log(queryObj)
     const queryStr = queryString.stringify(queryObj);
     return await this.get('taqueria/getall' + (queryStr ? `?${queryStr}` : ''));
   }
@@ -37,3 +40,4 @@ class TaqueriaService extends BaseHttpService {
 
 }
 export default TaqueriaService;
+
