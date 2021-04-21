@@ -7,13 +7,15 @@
   height: 75px;
   padding: 0.5rem 1.4rem !important;
   padding-bottom: 1.3rem !important;
+  background-color: $BlackPearl;
   a label {
     width: 40px;
     text-align: center;
     margin: auto;
     font-size: 0.65rem;
-    color: white;
+    color: $PantoneEggShell;
     svg {
+      fill: $PantoneEggShell;
       margin-bottom: 2px;
     }
   }
@@ -22,6 +24,7 @@
 .page_control {
   height: 45px;
   padding: 0.5rem 1.4rem !important;
+  background-color: $BlackPearl;
 
   &_goBack {
     float: left;

@@ -23,7 +23,7 @@ import CreateTaco from "./Pages/Taco/CreateTaco";
 
 export const App = () => {
   return (
-    <Container bg="dark" className="bg-dark container_app p-0 m-0 w-100">
+    <Container className="container_app p-0 m-0 w-100">
       <Router>
         <UserProvider>
           <UserConsumer>

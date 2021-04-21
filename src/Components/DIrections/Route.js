@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useContext, useState } from "react";
 import { Polyline } from "react-leaflet";
+import { Redirect } from "react-router";
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
 import { UserContext } from "../../Utils/Contexts/UserContext";
@@ -9,17 +10,20 @@ export const Directions = () => {
     const { mapboxService, tacoMap, } = useContext(MapContext);
     const { taqueria: { selectTaco }, } = useContext(TaqueriaContext);
 
-    const getDirections = async () => {
-        const res = await mapboxService.getDirections({
-            start: user.location,
-            end: { lat: selectTaco.latitude, lng: selectTaco.longitude }
-        });
-        if (res.status === 200) {
-            console.log(res)
-            tacoMap.dispatch({ type: 'SET_MAP_DIRECTIONS', payload: { directions: res.data.routes } });
-        }
-    }
-    return <label className='directions' onClick={getDirections}>Directions</label>
+    // const getDirections = async () => {
+    //     // const res = await mapboxService.getDirections({
+    //     //     start: user.location,
+    //     //     end: { lat: selectTaco.latitude, lng: selectTaco.longitude }
+    //     // });
+    //     // if (res.status === 200) {
+    //     //     console.log(res)
+    //     //     tacoMap.dispatch({ type: 'SET_MAP_DIRECTIONS', payload: { directions: res.data.routes } });
+    //     // }
+    //     return
+    // }
+    return <a href={`https://maps.google.com/maps?q=${selectTaco.latitude},${selectTaco.longitude}`}>
+        <label className='directions text-white' >Directions</label>
+    </a>
 }
 
 export const DirectionsLine = () => {

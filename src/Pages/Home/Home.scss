@@ -11,7 +11,7 @@
   .homePage_intro {
     height: 75vh;
     width: 100%;
-    color: white;
+    color: $PantoneEggShell;
     position: relative;
     .taco_img_container {
       position: absolute;
@@ -24,7 +24,7 @@
         height: 50vw;
         width: 50vw;
         border-radius: 50%;
-        border: 10px solid white;
+        border: 10px solid $PantoneEggShell;
         margin: auto;
         img {
           position: absolute;
@@ -51,10 +51,12 @@
       width: 100%;
     }
     #register {
-      color: #343a40 !important;
+      background-color: $PantoneEggShell;
+      color: $BlackPearl !important;
     }
     #signin {
-      color: white;
+      border: 1px solid $PantoneEggShell;
+      color: $PantoneEggShell;
     }
   }
 }

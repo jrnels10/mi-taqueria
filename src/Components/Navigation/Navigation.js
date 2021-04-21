@@ -8,16 +8,17 @@ import './Navigation.scss';
 const Navigation = () => {
     const [search, setSearch] = useState(true)
     let location = useLocation();
-    const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/list/searchtaco'
-    return <Navbar bg="dark" className='nav ' expand="lg">
+    const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/map/searchtaco'
+    console.log(search)
+    return <Navbar className='nav ' expand="lg">
         <Link to="/">
             <label>
-                <House color="white" size={25} />
+                <House color="white" size={25} onClick={() => setSearch(true)} />
                 Home
             </label>
         </Link>
         <Link to={{
-            pathname: search ? searchLocationPath : location.pathname.split('/searchtaco')[0]
+            pathname: search ? searchLocationPath : '/map'
         }} >
             <label>
                 <Search color="white" size={25} onClick={() => setSearch(!search)} />
@@ -26,19 +27,19 @@ const Navigation = () => {
         </Link>
         <Link to="/user/favorites">
             <label>
-                <Star color="white" size={25} />
+                <Star color="white" size={25} onClick={() => setSearch(true)} />
                 Favorites
             </label>
         </Link>
         <Link to="/map">
             <label>
-                <GeoAltFill color="white" size={25} />
+                <GeoAltFill color="white" size={25} onClick={() => setSearch(true)} />
                     Map
             </label>
         </Link>
         <Link to="/user/profile">
             <label>
-                <PersonCircle color="white" size={25} />
+                <PersonCircle color="white" size={25} onClick={() => setSearch(true)} />
                         Profile
             </label>
         </Link>

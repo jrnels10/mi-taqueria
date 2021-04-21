@@ -12,7 +12,7 @@ export const TaqueriaSearch = ({ children }) => {
     const { tacoService, taqueria } = useContext(TaqueriaContext);
     const [searchValue, setsearchValue] = useState(taqueria.searchValue);
     const [tacoStatus, setTacoStatus] = useState('');
-    const [tacoDays, setTacoDays] = useState(["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]);
+    const [tacoDays, setTacoDays] = useState([]);
     const [toggle, setToggle] = useState(false);
     const searchBy = async e => {
         setsearchValue(e.target.value)
@@ -41,6 +41,7 @@ export const TaqueriaSearch = ({ children }) => {
     }
     const applyDayFilter = async (days) => {
         setTacoDays(days)
+        debugger
         const res = await tacoService.getTaqueria({ status: tacoStatus, search: searchValue.toLowerCase(), days });
         taqueria.dispatch({
             type: "SEARCHLIST",

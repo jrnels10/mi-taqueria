@@ -8,6 +8,7 @@ import { Toggle } from '../../Components/Toggle';
 import { PageControl } from '../../Components/Navigation/Navigation';
 import { PencilSquare } from 'react-bootstrap-icons';
 import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
+import { Directions } from '../../Components/DIrections/Route';
 
 export const Taco = () => {
     const { user } = useContext(UserContext);
@@ -55,6 +56,7 @@ export const Taco = () => {
             </div> */}
             <h3>{taco.name}</h3>
             <p>{taco.description}</p>
+            <Directions />
             {user && user.id === taco.userId ? <div className='w-100'>
                 <label className='w-100'>Status</label>
                 <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} />

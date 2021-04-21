@@ -47,8 +47,10 @@ export const Signin: React.FC = (props: any) => {
             ref={register}
           />
           {errorHandler.message
-            ? errorHandler.message.map((m: string) => (
-                <Form.Text className="text-danger">{m.concat(".")}</Form.Text>
+            ? errorHandler.message.map((m: string, i: number) => (
+                <Form.Text key={i} className="text-danger">
+                  {m.concat(".")}
+                </Form.Text>
               ))
             : null}
           <Form.Text className="text-muted">

@@ -4,9 +4,10 @@
   margin: 0px !important;
   max-width: 100%;
   &_app {
-    background-color: white;
+    background-color: $BlackPearl;
     height: 100vh;
     width: 100%;
+    color: $PantoneEggShell;
   }
   &_page {
     height: calc(100% - 56px);
