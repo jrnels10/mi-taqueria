@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
-import { FilterRight, XSquareFill } from 'react-bootstrap-icons';
+import { BackspaceFill, FilterRight, XSquareFill } from 'react-bootstrap-icons';
 import { Link, useHistory } from 'react-router-dom';
 import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 import { Context } from '../../Utils/Contexts/UserContext';
@@ -61,7 +61,7 @@ export const TaqueriaSearch = ({ children }) => {
             onChange={searchBy}
         />
         <div className='taco_search_filter--icon-close' onClick={clearSearch}>
-            <XSquareFill color="#515156" size={30} />
+            <XSquareFill color="#515156" size={35} />
         </div>
         <div className={`taco_search_by taco_search_by${toggle ? '--filters' : ''}`}>
             {toggle ? <div className='filter_container'>

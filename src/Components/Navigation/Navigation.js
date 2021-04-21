@@ -9,19 +9,38 @@ const Navigation = () => {
     const [search, setSearch] = useState(true)
     let location = useLocation();
     const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/list/searchtaco'
-    return <Navbar bg="dark" className='nav' expand="lg">
-        <Link to="/"><House color="white" size={20} /></Link>
+    return <Navbar bg="dark" className='nav ' expand="lg">
+        <Link to="/">
+            <label>
+                <House color="white" size={25} />
+                Home
+            </label>
+        </Link>
         <Link to={{
             pathname: search ? searchLocationPath : location.pathname.split('/searchtaco')[0]
         }} >
-            <Search color="white" size={20} onClick={() => setSearch(!search)} />
+            <label>
+                <Search color="white" size={25} onClick={() => setSearch(!search)} />
+            Search
+            </label>
         </Link>
         <Link to="/user/favorites">
-            <Star color="white" size={20} />
+            <label>
+                <Star color="white" size={25} />
+                Favorites
+            </label>
         </Link>
-        <Link to="/map"><GeoAltFill color="white" size={20} /></Link>
+        <Link to="/map">
+            <label>
+                <GeoAltFill color="white" size={25} />
+                    Map
+            </label>
+        </Link>
         <Link to="/user/profile">
-            <PersonCircle color="white" size={20} />
+            <label>
+                <PersonCircle color="white" size={25} />
+                        Profile
+            </label>
         </Link>
     </Navbar >
 };
@@ -38,11 +57,11 @@ export const PageControl = ({ children }) => {
         history.push('/')
     }
     console.log(user)
-    return <div className='page_control p-1'>
-        <ArrowLeftCircle className='page_control_goBack' color="white" size={24} onClick={() => history.goBack()} />
+    return <div className='page_control'>
+        <ArrowLeftCircle className='page_control_goBack' color="white" size={25} onClick={() => history.goBack()} />
         <div className='children_wrapper'>
             {children}
         </div>
-        {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={24} onClick={handleSignout} /> : null}
+        {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={25} onClick={handleSignout} /> : null}
     </div>
 }

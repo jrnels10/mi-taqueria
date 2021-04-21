@@ -95,7 +95,7 @@ class TaqueriaProvider extends Component {
             description: "",
             latitude: 0,
             longitude: 0,
-            daysOfTheWeek: '',
+            openDays: '',
             selectTaco: null,
             timeOpen: new Date(),
             timeClose: new Date(),

@@ -9,7 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Taqueria } from "../../Utils/Interfaces";
 import { withRouter } from "react-router";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { DaySelector } from "../../Components/Selectors";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
 import { MapContext } from "../../Utils/Contexts/MapContext";
@@ -17,6 +17,7 @@ import { MapContext } from "../../Utils/Contexts/MapContext";
 const CreateTaco = (props: any) => {
   const { register, handleSubmit } = useForm<Taqueria>();
   const [taco, settaco] = useState({});
+  const history = useHistory();
   const [headerMessage, setheaderMessage] = useState<string>(
     "Create new Taqueria"
   );
@@ -27,10 +28,12 @@ const CreateTaco = (props: any) => {
         ...taqueria,
         ...formValues,
       };
-      console.log(taco);
-      taqueria.update
-        ? tacoService.updateTaqueria(taco)
-        : tacoService.createTaqueria(taco);
+      const res = taqueria.update
+        ? await tacoService.updateTaqueria(taco)
+        : await tacoService.createTaqueria(taco);
+      if (res.status === 200 || res.status === 201) {
+        history.push("/map");
+      }
     },
     [taqueria]
   );
@@ -93,12 +96,12 @@ const CreateTaco = (props: any) => {
             Days of operation
           </Form.Label>
           <DaySelector
-            propsDays={taqueria.daysOfTheWeek.split(",")}
+            propsDays={taqueria.openDays.split(",")}
             callBack={(days: string[]) =>
               taqueria.dispatch({
                 type: "CREATE",
                 payload: {
-                  taqueria: { ...taqueria, daysOfTheWeek: days.join(",") },
+                  taqueria: { ...taqueria, openDays: days.join(",") },
                 },
               })
             }

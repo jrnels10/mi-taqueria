@@ -35,7 +35,7 @@ export const App = () => {
                       <MapConsumer>
                         {mapValue => {
                           return <Container className="container_page p-0">
-                            <div style={{ height: 'calc(100vh - 57px', position: 'relative' }}>
+                            <div style={{ height: 'calc(100vh - 75px', position: 'relative' }}>
                               <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route path="/signin/" component={Signin} />
