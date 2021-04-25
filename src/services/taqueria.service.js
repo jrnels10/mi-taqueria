@@ -34,7 +34,7 @@ class TaqueriaService extends BaseHttpService {
     return this.delete(`google-upload/${image.id}`)
   }
   async updateTaqueria(taco) {
-    if (taco.file) {
+    if (taco.file.length) {
       const bodyFormData = new FormData();
       bodyFormData.append("file", taco.file[0]);
       await this.post(`google-upload/${taco.id}`, bodyFormData, { headers: { 'Content-Type': 'multipart/form-data' } });

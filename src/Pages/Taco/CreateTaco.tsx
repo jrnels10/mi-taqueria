@@ -31,7 +31,7 @@ const CreateTaco = (props: any) => {
         ...taqueria,
         ...formValues,
       };
-      const del = taco.deleteImages.map(
+      taco.deleteImages.map(
         async (deletePhoto: IPhotos) =>
           await tacoService.deleteTaqueriaImage(deletePhoto)
       );
