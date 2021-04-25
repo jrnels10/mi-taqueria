@@ -66,7 +66,6 @@ export const PageControl = ({ children = null }) => {
         authService.signout();
         history.push('/')
     }
-    console.log(user)
     return <div className='page_control'>
         <ArrowLeftCircle className='page_control_goBack' color="white" size={25} onClick={() => history.goBack()} />
         <div className='children_wrapper'>

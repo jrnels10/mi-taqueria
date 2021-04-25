@@ -45,7 +45,6 @@ export const Taco = () => {
         taqueria.dispatch({ type: "EDIT_TACO", payload: { taco } });
         history.push(`${location.pathname}/update`)
     }
-    console.log(taco)
     return taco ? (
         <div className='taco_page text-white'>
             <PageControl>

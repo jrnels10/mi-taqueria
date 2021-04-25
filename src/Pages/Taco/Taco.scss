@@ -15,10 +15,7 @@
     overflow-y: auto;
     padding: 1rem;
     padding-bottom: 75px;
-    .create_taco_buttons {
-      background-color: $PantoneBlue;
-      border: 1px solid $PantoneBlue;
-    }
+
     .photoManger {
       margin-top: 5px;
       height: auto;
@@ -73,4 +70,8 @@
       object-position: center;
     }
   }
+}
+.create_taco_buttons {
+  background-color: $PantoneBlue;
+  border: 1px solid $PantoneBlue;
 }

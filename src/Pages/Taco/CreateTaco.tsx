@@ -150,6 +150,7 @@ const ManagePhotos = () => {
       {taqueria.photos.map((p: any) => {
         return (
           <Alert
+            key={p.id}
             variant="secondary"
             className={`photoManger_card photoManger_card${
               taqueria.deleteImages.find((d: any) => d.id === p.id)

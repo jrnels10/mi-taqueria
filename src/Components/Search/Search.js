@@ -40,8 +40,10 @@ export const TaqueriaSearch = ({ children }) => {
         });
     }
     const applyDayFilter = async (days) => {
+        const daysArray = [];
+        Object.keys(days).map(d => days[d] ? daysArray.push(d) : null);
         setTacoDays(days);
-        const res = await tacoService.getTaqueria({ status: tacoStatus, search: searchValue.toLowerCase(), days });
+        const res = await tacoService.getTaqueria({ status: tacoStatus, search: searchValue.toLowerCase(), days: daysArray });
         taqueria.dispatch({
             type: "SEARCHLIST",
             payload: { searchValue: searchValue.toLowerCase(), searchList: [...res.data] },

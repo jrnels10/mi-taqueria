@@ -1,10 +1,12 @@
 @import "./../../defaultCss.scss";
 
 .list {
-  height: 100vh;
+  height: calc(97vh - 100px);
+  width: 100%;
+  overflow-y: auto;
   &_container {
-    padding: 5px 25px;
-    color: white;
+    padding: 5px 10px;
+    color: $BlackPearl;
 
     &_options {
       margin-top: 100px;
@@ -14,11 +16,11 @@
   }
 
   &card {
-    color: white;
+    color: $BlackPearl;
     height: 60px;
     .taco_img {
       float: left;
-      border: 2px solid white;
+      border: 2px solid $PantoneMustard;
       border-radius: 50%;
       position: relative;
       height: 40px;
@@ -53,11 +55,18 @@
         width: 40px;
         .status {
           font-size: 0.8rem;
+          border-radius: 30px;
+          padding: 0 6px 2px 6px;
+          min-width: 52px;
+          text-align: center;
+          margin: 0;
           &--CLOSED {
-            border: 2px solid rgb(81, 81, 86);
-            color: rgb(81, 81, 86);
-            border-radius: 30px;
-            padding: 0 6px 2px 6px;
+            border: 2px solid $PantoneRedRgb;
+            color: $PantoneRedRgb;
+          }
+          &--OPEN {
+            border: 2px solid $PantoneBlue;
+            color: $PantoneBlue;
           }
         }
         .miles {

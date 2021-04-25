@@ -15,21 +15,26 @@ export const List = () => {
         <Route path="/list/searchtaco">
             <TaqueriaSearch>
                 <div className='list'>
-                    <ListContainer />
+                    <ListContainer>
+                        <ListContainerOptions />
+                    </ListContainer>
                 </div>
             </TaqueriaSearch>
         </Route>
     )
 }
-
-export const ListContainer = () => {
+export const ListContainerOptions = () => {
+    const { taqueria } = useContext(TaqueriaContext);
+    return <div className='list_container_options'>
+        <label>{taqueria.searchList.length} place{taqueria.searchList.length > 1 ? 's' : ''} nearby</label>
+    </div>
+}
+export const ListContainer = ({ children, myTacos }) => {
     const { taqueria } = useContext(TaqueriaContext);
     return <div className='list_container'>
-        <div className='list_container_options'>
-            <label>{taqueria.searchList.length} place{taqueria.searchList.length > 1 ? 's' : ''} nearby</label>
-        </div>
+        {children}
         {
-            taqueria.searchList.map(taco => <ListCard key={taco.id} taco={taco} />)
+            myTacos ? myTacos.map(taco => <ListCard key={taco.id} taco={taco} />) : taqueria.searchList.map(taco => <ListCard key={taco.id} taco={taco} />)
         }
     </div>
 }
@@ -53,7 +58,7 @@ export const ListCard = ({ taco }) => {
                     <p>{name}</p>
                 </label>
                 <label className='taco_data_status'>
-                    <span className={`status status--${status}`}>{status.toLowerCase()}</span>
+                    <label className={`status status--${status}`}>{status.toLowerCase()}</label>
                     <span className='miles'><GeoAltFill className='miles_geoIcon' color='#858e35' size={12} />miles</span>
                 </label>
             </div>
