@@ -120,7 +120,6 @@ class TaqueriaProvider extends Component {
     };
     tacoService = new TaqueriaService({ history: this.props.history, errorHandler: this.state.errorHandler });
     render() {
-        console.log(this.state)
         return (
             <TaqueriaContext.Provider
                 value={{

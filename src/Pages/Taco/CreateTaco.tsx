@@ -57,7 +57,6 @@ const CreateTaco = (props: any) => {
   };
   const createDays = (days: ISchedule) => {
     const newDays = new Schedule({ ...days });
-    console.log(newDays);
     taqueria.dispatch({
       type: "CREATE",
       payload: {
@@ -65,7 +64,6 @@ const CreateTaco = (props: any) => {
       },
     });
   };
-  console.log(taqueria.photos);
   return (
     <Container className="taco_page ">
       <PageControl></PageControl>

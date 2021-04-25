@@ -28,7 +28,6 @@ export const User = () => {
     const create = () => {
         taqueria.dispatch({ type: 'CREATE' })
     }
-    console.log(myTacos)
     return (
         <div className='user_page h-100 w-100 position-relative' >
             <PageControl>

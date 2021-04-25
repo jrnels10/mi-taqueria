@@ -73,7 +73,6 @@ class UserProvider extends Component {
   };
   authService = new AuthService({ history: this.props.history, errorHandler: this.state.errorHandler });
   render() {
-    console.log(this.state)
     return (
       <UserContext.Provider
         value={{
