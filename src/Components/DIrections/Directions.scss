@@ -1,5 +1,8 @@
+@import "./../../defaultCss.scss";
+
 .directions {
-  background-color: gray;
-  border-radius: 20px;
-  padding: 2px;
+  background-color: $PantoneBlue;
+  border: 1px solid $PantoneBlue;
+  margin: auto;
+  text-align: center;
 }

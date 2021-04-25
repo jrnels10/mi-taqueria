@@ -1,11 +1,76 @@
+@import "./../../defaultCss.scss";
+
 .taco_page {
   height: 100%;
+  color: black !important;
+  padding: 0px;
   overflow-y: auto;
+  .edit_label {
+    color: $PantoneBlue;
+    margin: 0.5rem;
+    padding-top: 5px;
+  }
+  &_create {
+    height: 100%;
+    overflow-y: auto;
+    padding: 1rem;
+    padding-bottom: 75px;
+    .create_taco_buttons {
+      background-color: $PantoneBlue;
+      border: 1px solid $PantoneBlue;
+    }
+    .photoManger {
+      margin-top: 5px;
+      height: auto;
+      &_card {
+        height: auto;
+        position: relative;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        &--deleted {
+          opacity: 0.6;
+          filter: grayscale(100%);
+        }
+        &_name {
+          width: 80%;
+        }
+        &_delete {
+          width: 30px;
+          right: 10px;
+          height: calc(100% - 10px);
+          position: absolute;
+          margin: 0;
+          label {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            svg {
+              fill: $PantoneMustard;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+    }
+  }
+  .taco_title {
+    color: $PantoneRed;
+    font-size: 25px;
+    margin-bottom: 0;
+    line-height: 1;
+    font-family: $MainFont;
+    text-shadow: -1px -1px 0 $PantoneEggShellRgb, 1px -1px 0 $PantoneEggShellRgb,
+      -1px 1px 0 $PantoneEggShellRgb, 1px 1px 0 $PantoneEggShellRgb;
+  }
   &_img {
-    height: 30vh;
     img {
-      height: 100%;
+      height: 30vh;
       width: 100%;
+      object-fit: cover;
+      object-position: center;
     }
   }
 }

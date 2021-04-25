@@ -30,7 +30,7 @@ export const User = () => {
         taqueria.dispatch({ type: 'CREATE' })
     }
     return (
-        <div className='h-100 w-100 p-1 position-relative' >
+        <div className='h-100 w-100 position-relative' >
             <PageControl>
 
             </PageControl>

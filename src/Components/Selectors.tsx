@@ -1,47 +1,89 @@
 import { useState, useEffect } from "react";
 import { titleCase } from "../Utils/tools";
 import "./Selectors.scss";
+import { ISchedule } from "../Utils/Interfaces";
 
+const days = {
+  sunday: false,
+  monday: false,
+  tuesday: false,
+  wednesday: false,
+  thursday: false,
+  friday: false,
+  saturday: false,
+};
+const color = {
+  red: false,
+  green: true,
+  blue: false,
+};
 export const DaySelector = (props: any) => {
-  const { callBack = () => null, propsDays = [], customClassName = "" } = props;
-  const days = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-  const [daysSelected, setdaysSelected] = useState<string[]>(propsDays);
-  const selectDay = (name: string) => {
-    const found = daysSelected.find((s: string) => s === name);
-    let days = daysSelected;
-    if (found) {
-      days = [...daysSelected.filter((f) => f !== name)];
-    } else {
-      days = [...daysSelected, name];
-    }
-    setdaysSelected(days);
-    callBack(days);
+  const {
+    callBack = () => null,
+    propsDays = days,
+    customClassName = "",
+    readOnly = false,
+  } = props;
+  const [daysSelected, setdaysSelected] = useState<ISchedule>(
+    propsDays ? propsDays : days
+  );
+  const selectDay = (day: any) => {
+    const dayKey: keyof ISchedule = day;
+    const newDays = { ...daysSelected, ...{ [day]: !daysSelected[dayKey] } };
+    setdaysSelected(newDays);
+    callBack(newDays);
   };
-
   useEffect(() => {
-    return setdaysSelected(propsDays);
+    if (propsDays) {
+      return setdaysSelected(propsDays);
+    }
   }, [propsDays]);
   return (
-    <ul className={`daysOfOperation ${customClassName}`}>
-      {days.map((d: string) => {
-        return (
-          <li
-            key={d}
-            className={`day_${daysSelected.includes(d)}`}
-            onClick={() => selectDay(d)}
-          >
-            <span>{titleCase(d.substring(0, 2))}</span>
-          </li>
-        );
-      })}
-    </ul>
+    <div className="daysOfOperation_container">
+      <ul className={`daysOfOperation ${customClassName}`}>
+        <li
+          className={`day_${daysSelected.sunday}`}
+          onClick={() => (!readOnly ? selectDay("sunday") : null)}
+        >
+          <span>Su</span>
+        </li>
+        <li
+          className={`day_${daysSelected.monday}`}
+          onClick={() => (!readOnly ? selectDay("monday") : null)}
+        >
+          <span>Mo</span>
+        </li>
+        <li
+          className={`day_${daysSelected.tuesday}`}
+          onClick={() => (!readOnly ? selectDay("tuesday") : null)}
+        >
+          <span>Tu</span>
+        </li>
+        <li
+          className={`day_${daysSelected.wednesday}`}
+          onClick={() => (!readOnly ? selectDay("wednesday") : null)}
+        >
+          <span>We</span>
+        </li>
+        <li
+          className={`day_${daysSelected.thursday}`}
+          onClick={() => (!readOnly ? selectDay("thursday") : null)}
+        >
+          <span>Th</span>
+        </li>
+        <li
+          className={`day_${daysSelected.friday}`}
+          onClick={() => (!readOnly ? selectDay("friday") : null)}
+        >
+          <span>Fr</span>
+        </li>
+        <li
+          className={`day_${daysSelected.saturday}`}
+          onClick={() => (!readOnly ? selectDay("saturday") : null)}
+        >
+          <span>Sa</span>
+        </li>
+      </ul>
+    </div>
   );
 };

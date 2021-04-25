@@ -17,7 +17,6 @@ class TaqueriaService extends BaseHttpService {
     if (search && search.length) {
       queryObj.search = search;
     }
-    console.log(queryObj)
     const queryStr = queryString.stringify(queryObj);
     return await this.get('taqueria/getall' + (queryStr ? `?${queryStr}` : ''));
   }
@@ -31,7 +30,15 @@ class TaqueriaService extends BaseHttpService {
   updateTaqueriaStatus(id, status) {
     return this.patch(`taqueria/${id}/status`, { status });
   }
-  updateTaqueria(taco) {
+  async deleteTaqueriaImage(image) {
+    return this.delete(`google-upload/${image.id}`)
+  }
+  async updateTaqueria(taco) {
+    if (taco.file) {
+      const bodyFormData = new FormData();
+      bodyFormData.append("file", taco.file[0]);
+      await this.post(`google-upload/${taco.id}`, bodyFormData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    }
     return this.patch(`taqueria/${taco.id}`, { ...taco });
   }
   createTaqueria(taqueria) {

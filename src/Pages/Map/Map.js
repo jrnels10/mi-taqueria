@@ -116,10 +116,7 @@ function MapEvents(props) {
     }, []);
     return null
 }
-const transition = {
-    type: "spring",
-    stiffness: 100
-}
+
 const TacoCard = () => {
     const {
         taqueria,
@@ -136,7 +133,7 @@ const TacoCard = () => {
         }} >
             <div className="select_taco_body">
                 <label className='title'>
-                    {selectTaco.name.length > 20 ? `${selectTaco.name.substring(0, 20)}...` : selectTaco.name}
+                    {selectTaco.name.length > 15 ? `${selectTaco.name.substring(0, 15)}...` : selectTaco.name}
                 </label>
                 <label className={`schedule text-${selectTaco.status === 'CLOSED' ? 'danger' : 'success'}`}>
                     <span className='schedule_status'>
@@ -145,14 +142,10 @@ const TacoCard = () => {
                 </label>
             </div>
         </Link>
-        {/* <label className='close' onClick={() => taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } })}>
-            <XCircleFill />
-        </label> */}
         <label className='get_directions'>
-            <ArrowRightCircleFill />
+            <a href={`https://maps.google.com/maps?q=${selectTaco.latitude},${selectTaco.longitude}`}>
+                <ArrowRightCircleFill />
+            </a>
         </label>
-        {/* <div className='direction_container'>
-            <Directions />
-        </div> */}
     </motion.div> : null}</AnimatePresence>
 }

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useContext, useState } from "react";
+import { Button } from "react-bootstrap";
 import { Polyline } from "react-leaflet";
 import { Redirect } from "react-router";
 import { MapContext } from "../../Utils/Contexts/MapContext";
@@ -9,7 +10,6 @@ export const Directions = () => {
     const { user, } = useContext(UserContext);
     const { mapboxService, tacoMap, } = useContext(MapContext);
     const { taqueria: { selectTaco }, } = useContext(TaqueriaContext);
-
     // const getDirections = async () => {
     //     // const res = await mapboxService.getDirections({
     //     //     start: user.location,
@@ -22,7 +22,7 @@ export const Directions = () => {
     //     return
     // }
     return <a href={`https://maps.google.com/maps?q=${selectTaco.latitude},${selectTaco.longitude}`}>
-        <label className='directions text-white' >Directions</label>
+        <Button className='directions text-white'>Directions</Button>
     </a>
 }
 

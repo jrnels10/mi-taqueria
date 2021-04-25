@@ -35,11 +35,16 @@ export const ListContainer = () => {
 }
 export const ListCard = ({ taco }) => {
     const { status, name } = taco;
+    const { taqueria } = useContext(TaqueriaContext);
+
+    const setSelected = () => {
+        taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: taco } });
+    }
     return <Link to={{
         pathname: `/taco/${taco.id}`,
         query: { taco }
     }} >
-        <div className='listcard'>
+        <div className='listcard' onClick={setSelected}>
             <div className='taco_img'>
                 <img src={tacoImg} />
             </div>

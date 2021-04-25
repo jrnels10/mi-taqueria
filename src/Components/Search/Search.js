@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useContext } from 'react';
 import { Button, ButtonGroup, Form } from 'react-bootstrap';
-import { BackspaceFill, FilterRight, XSquareFill } from 'react-bootstrap-icons';
+import { BackspaceFill, FilterLeft, XSquareFill } from 'react-bootstrap-icons';
 import { Link, useHistory } from 'react-router-dom';
 import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 import { Context } from '../../Utils/Contexts/UserContext';
@@ -40,8 +40,7 @@ export const TaqueriaSearch = ({ children }) => {
         });
     }
     const applyDayFilter = async (days) => {
-        setTacoDays(days)
-        debugger
+        setTacoDays(days);
         const res = await tacoService.getTaqueria({ status: tacoStatus, search: searchValue.toLowerCase(), days });
         taqueria.dispatch({
             type: "SEARCHLIST",
@@ -50,7 +49,7 @@ export const TaqueriaSearch = ({ children }) => {
     }
     return <div className='taco_search'>
         <div className='taco_search_filter--icon' onClick={() => setToggle(!toggle)}>
-            <FilterRight color="white" size={25} />
+            <FilterLeft color="white" size={25} />
         </div>
         <Form.Control
             autoFocus

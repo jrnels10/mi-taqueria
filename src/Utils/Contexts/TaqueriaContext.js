@@ -16,7 +16,9 @@ const taqueriaReducer = (state, action) => {
                     description: "",
                     latitude: 0,
                     longitude: 0,
-                    update: false
+                    photos: [],
+                    update: false,
+                    schedule: ''
                 }
             };
 
@@ -64,6 +66,14 @@ const taqueriaReducer = (state, action) => {
                     searchValue: action.payload.searchValue
                 }
             }
+        case "DELETE_IMAGES":
+            return {
+                ...state,
+                taqueria: {
+                    ...state.taqueria,
+                    deleteImages: [...action.payload.photos]
+                }
+            }
         default:
             return state;
     }
@@ -95,21 +105,22 @@ class TaqueriaProvider extends Component {
             description: "",
             latitude: 0,
             longitude: 0,
-            openDays: '',
+            schedule: null,
             selectTaco: null,
-            timeOpen: new Date(),
-            timeClose: new Date(),
             status: "CLOSED",
+            photos: [],
             suggestedLocation: null,
             searchList: [],
             searchValue: '',
             setLocate: false,
             update: false,
+            deleteImages: [],
             dispatch: action => this.setState(state => taqueriaReducer(state, action))
         }
     };
     tacoService = new TaqueriaService({ history: this.props.history, errorHandler: this.state.errorHandler });
     render() {
+        console.log(this.state)
         return (
             <TaqueriaContext.Provider
                 value={{

@@ -11,8 +11,9 @@
   .homePage_intro {
     height: 75vh;
     width: 100%;
-    color: $PantoneEggShell;
     position: relative;
+    text-align: center;
+
     .taco_img_container {
       position: absolute;
       width: 100%;
@@ -37,8 +38,11 @@
     }
     .main_title {
       font-size: 4rem;
-      // -webkit-text-stroke-width: 3px;
-      // -webkit-text-stroke-color: black;
+      color: $PantoneRed;
+      margin-top: 65px;
+      text-shadow: -1px -1px 0 $PantoneEggShellRgb,
+        1px -1px 0 $PantoneEggShellRgb, -1px 1px 0 $PantoneEggShellRgb,
+        1px 1px 0 $PantoneEggShellRgb;
     }
   }
   .signup_buttons {
@@ -52,10 +56,11 @@
     }
     #register {
       background-color: $PantoneEggShell;
-      color: $BlackPearl !important;
+      color: $PantoneBlue !important;
     }
     #signin {
-      border: 1px solid $PantoneEggShell;
+      background-color: $PantoneBlue;
+      // border: 1px solid $PantoneEggShell;
       color: $PantoneEggShell;
     }
   }

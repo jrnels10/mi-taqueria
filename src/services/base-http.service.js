@@ -15,8 +15,9 @@ export default class BaseHttpService {
   }
 
   async post(endpoint, data = {}, options = {}) {
-    Object.assign(options, this._getCommonOptions());
-    return axios.post(`${this.BASE_URL}/${endpoint}`, data, options)
+    let commonHeaders = { ...this._getCommonOptions().headers }
+    let head = { headers: { ...options.headers, ...commonHeaders } }
+    return axios.post(`${this.BASE_URL}/${endpoint}`, data, head)
       .catch(error => this._handleHttpError(error));
   }
 

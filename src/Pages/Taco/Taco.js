@@ -9,12 +9,13 @@ import { PageControl } from '../../Components/Navigation/Navigation';
 import { PencilSquare } from 'react-bootstrap-icons';
 import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 import { Directions } from '../../Components/DIrections/Route';
+import { DaySelector } from '../../Components/Selectors';
 
 export const Taco = () => {
     const { user } = useContext(UserContext);
-    const { tacoService, taqueria } = useContext(TaqueriaContext);
+    const { tacoService, taqueria, taqueria: { selectTaco } } = useContext(TaqueriaContext);
     let location = useLocation();
-    const [taco, settaco] = useState({});
+    const [taco, settaco] = useState(null);
     let history = useHistory();
     useEffect(() => {
         const fetchTaco = async () => {
@@ -22,20 +23,18 @@ export const Taco = () => {
                 const id = location.pathname.split('/taco/')[1];
                 const res = await tacoService.getTaquieriaById({ id });
                 if (res && res.data) {
+                    taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: res.data } });
                     settaco(res.data);
                 }
             } catch (error) {
                 console.log(error);
             }
         };
-        if (!location.query) {
+        if (!taco) {
             fetchTaco();
-        } else {
-            settaco(location.query.taco);
         }
         return () => null;
     }, [])
-    console.log(user, taco)
     const setStatus = async () => {
         const status = taco.status === 'CLOSED' ? 'OPEN' : 'CLOSED';
         settaco({ ...taco, status });
@@ -46,24 +45,35 @@ export const Taco = () => {
         taqueria.dispatch({ type: "EDIT_TACO", payload: { taco } });
         history.push(`${location.pathname}/update`)
     }
-    return (
+    console.log(taco)
+    return taco ? (
         <div className='taco_page text-white'>
             <PageControl>
-                {user && user.id === taco.userId ? <PencilSquare color="white" size={24} onClick={setEdit} /> : null}
+                <label className='taco_title'>
+                    {taco.name}
+                </label>
+
+
             </PageControl>
-            {/* <div className='taco_page_img'>
-                <img src={placeHolder} />
-            </div> */}
-            <h3>{taco.name}</h3>
-            <p>{taco.description}</p>
-            <Directions />
-            {user && user.id === taco.userId ? <div className='w-100'>
-                <label className='w-100'>Status</label>
-                <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} />
-            </div> : null
-            }
-            {/* <Button>View Menu</Button>
-            <Button>Get Directions</Button> */}
+            <div className='taco_page_img'>
+                {taco.photos.length ? taco.photos.map(image => {
+                    return <img src={image.fileUrl} />
+                }) : <img src={placeHolder} />}
+            </div>
+            <div className='p-2'>
+                {user && user.id === taco.userId ? <span className='edit_label float-left mt-2'> <PencilSquare size={24} onClick={setEdit} /></span> : null}
+
+                <DaySelector readOnly propsDays={taco.schedule ? taco.schedule : {}} />
+                <p>{taco.description}</p>
+                {user && user.id === taco.userId ? <div className='w-50 pr-1 float-left'>
+                    <label className='w-100'>{taco.status}</label>
+                    <Toggle toggleAction={setStatus} toggleState={taco.status === 'OPEN'} />
+                </div> : null
+                }
+                <div className='h-100 w-50 pt-4 float-left '>
+                    <Directions />
+                </div>
+            </div>
         </div >
-    )
+    ) : null
 }

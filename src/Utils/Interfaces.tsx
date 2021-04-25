@@ -1,5 +1,3 @@
-import { RouteChildrenProps, RouteComponentProps } from "react-router-dom";
-
 export interface RegistrationUserData {
   email: string;
   password: string;
@@ -18,15 +16,26 @@ export interface User {
 export interface Taqueria {
   id: number;
   name: string;
-  daysOfTheWeek: string;
   description: string;
   latitude: number;
   longitude: number;
-  timeOpen: Date;
-  timeClose: Date;
   status: string;
+  photos: IPhotos[];
 }
 
+export interface IPhotos {
+  fileUrl: string;
+  fileName: string;
+}
+export interface ISchedule {
+  sunday: boolean;
+  monday: boolean;
+  tuesday: boolean;
+  wednesday: boolean;
+  thursday: boolean;
+  friday: boolean;
+  saturday: boolean;
+}
 export interface TaqueriaContextData {
   taqueria: Taqueria[];
 }

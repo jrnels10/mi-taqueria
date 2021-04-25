@@ -5,18 +5,21 @@ import {
   Button,
   InputGroup,
   FormControl,
+  Alert,
 } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { Taqueria } from "../../Utils/Interfaces";
+import { IPhotos, ISchedule, Taqueria } from "../../Utils/Interfaces";
 import { withRouter } from "react-router";
 import { Link, useHistory } from "react-router-dom";
 import { DaySelector } from "../../Components/Selectors";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
 import { MapContext } from "../../Utils/Contexts/MapContext";
+import { PageControl } from "../../Components/Navigation/Navigation";
+import { Schedule } from "../../Utils/Constructors/Schedule";
+import { XSquareFill } from "react-bootstrap-icons";
 
 const CreateTaco = (props: any) => {
   const { register, handleSubmit } = useForm<Taqueria>();
-  const [taco, settaco] = useState({});
   const history = useHistory();
   const [headerMessage, setheaderMessage] = useState<string>(
     "Create new Taqueria"
@@ -28,11 +31,15 @@ const CreateTaco = (props: any) => {
         ...taqueria,
         ...formValues,
       };
+      const del = taco.deleteImages.map(
+        async (deletePhoto: IPhotos) =>
+          await tacoService.deleteTaqueriaImage(deletePhoto)
+      );
       const res = taqueria.update
         ? await tacoService.updateTaqueria(taco)
         : await tacoService.createTaqueria(taco);
       if (res.status === 200 || res.status === 201) {
-        history.push("/map");
+        history.push(`/taco/${res.data.id}`);
       }
     },
     [taqueria]
@@ -48,12 +55,21 @@ const CreateTaco = (props: any) => {
       payload: { taqueria: { ...taqueria, [e.target.name]: e.target.value } },
     });
   };
-
+  const createDays = (days: ISchedule) => {
+    const newDays = new Schedule({ ...days });
+    console.log(newDays);
+    taqueria.dispatch({
+      type: "CREATE",
+      payload: {
+        taqueria: { ...taqueria, schedule: newDays },
+      },
+    });
+  };
+  console.log(taqueria.photos);
   return (
-    <Container className="taco_page text-white">
-      <div>{headerMessage}</div>
-      <br />
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <Container className="taco_page ">
+      <PageControl></PageControl>
+      <Form className="taco_page_create " onSubmit={handleSubmit(onSubmit)}>
         <Form.Group controlId="formBasicName">
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -79,15 +95,7 @@ const CreateTaco = (props: any) => {
             onChange={(e) => constructTaco(e)}
           />
         </Form.Group>
-        <Form.Group controlId="formBasicLocation">
-          {/* <Form.File
-            id="exampleFormControlFile1"
-            name="file"
-            type="file"
-            ref={register}
-            label="Image of Taqueria"
-          /> */}
-        </Form.Group>
+
         <Form.Group controlId="formBasicLocation">
           <GeoAddress setheaderMessage={setheaderMessage} />
         </Form.Group>
@@ -95,28 +103,24 @@ const CreateTaco = (props: any) => {
           <Form.Label className="m-auto text-center  w-100">
             Days of operation
           </Form.Label>
-          <DaySelector
-            propsDays={taqueria.openDays.split(",")}
-            callBack={(days: string[]) =>
-              taqueria.dispatch({
-                type: "CREATE",
-                payload: {
-                  taqueria: { ...taqueria, openDays: days.join(",") },
-                },
-              })
-            }
-          />
+          <DaySelector propsDays={taqueria.schedule} callBack={createDays} />
         </Form.Group>
-
-        {/* <Form.Group controlId="formBasicHours">
-          <Form.Label>Hours of operation</Form.Label>
-          <TimePicker
-            onChange={(time: any) => setTimePicker(time, "")}
-            value={new Date()}
-          />
-        </Form.Group> */}
+        <Form.Group controlId="formBasicImages">
+          {taqueria.photos.length > 1 ? (
+            <Alert variant="danger">Maximum photos uploaded!</Alert>
+          ) : (
+            <Form.File
+              id="exampleFormControlFile1"
+              name="file"
+              type="file"
+              ref={register}
+              label="Image of Taqueria"
+            />
+          )}
+          {taqueria.photos.length ? <ManagePhotos /> : null}
+        </Form.Group>
         <div className="w-100 mt-5 text-center">
-          <Button className="w-75" variant="primary" type="submit">
+          <Button className="w-75 create_taco_buttons" type="submit">
             {taqueria.update ? "Update" : "Create"}
           </Button>
         </div>
@@ -126,6 +130,45 @@ const CreateTaco = (props: any) => {
 };
 
 export default withRouter(CreateTaco);
+
+const ManagePhotos = () => {
+  const { tacoService, taqueria } = useContext(TaqueriaContext);
+  const [toBeDeleted, settoBeDeleted] = useState([]);
+  const deleteImages = async (photo: any) => {
+    // const del = await tacoService.deleteTaqueriaImage(photo);
+    // if (del) {
+    taqueria.dispatch({
+      type: "DELETE_IMAGES",
+      payload: {
+        photos: [...taqueria.deleteImages, photo],
+      },
+    });
+    // }
+  };
+  return (
+    <div className="photoManger">
+      {taqueria.photos.map((p: any) => {
+        return (
+          <Alert
+            variant="secondary"
+            className={`photoManger_card photoManger_card${
+              taqueria.deleteImages.find((d: any) => d.id === p.id)
+                ? "--deleted"
+                : ""
+            }`}
+          >
+            <label className="photoManger_card_name">{p.fileName}</label>
+            <label className="photoManger_card_delete">
+              <label>
+                <XSquareFill size={25} onClick={() => deleteImages(p)} />
+              </label>
+            </label>
+          </Alert>
+        );
+      })}
+    </div>
+  );
+};
 
 const GeoAddress = (props: any) => {
   const { taqueria } = useContext(TaqueriaContext);
@@ -154,13 +197,6 @@ const GeoAddress = (props: any) => {
       }
     }
   };
-  // const addLocation = async (e: { preventDefault: () => void }) => {
-  //   taqueria.dispatch({
-  //     type: "SET_LOCATE",
-  //     payload: { setLocate: true },
-  //   });
-  //   setheaderMessage("Click the location where your taqueria is located.");
-  // };
 
   return (
     <Form.Group controlId="formLocation">
@@ -177,7 +213,10 @@ const GeoAddress = (props: any) => {
               : ""
           }
         />
-        <Button variant="primary" onClick={(e) => queryAddress(e)}>
+        <Button
+          className="create_taco_buttons"
+          onClick={(e) => queryAddress(e)}
+        >
           Search
         </Button>
       </InputGroup>

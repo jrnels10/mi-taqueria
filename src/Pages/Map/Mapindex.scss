@@ -27,7 +27,8 @@
 .select_taco {
   height: 60px;
   width: 90%;
-  background: #3f3f3f;
+  background: $PantoneMustard;
+  border: 2px solid $PantoneEggShell;
   position: absolute;
   bottom: 10px;
   z-index: 1000;
@@ -43,18 +44,23 @@
     float: left;
     position: relative;
     .title {
-      color: white;
-      font-size: 20px;
+      color: $PantoneRed;
+      font-size: 25px;
       width: calc(100% - 70px);
       float: left;
+      line-height: 1.3;
       font-family: $MainFont;
       margin: 0;
-      margin-top: 2px;
+      padding-bottom: 2px;
+      text-shadow: -1px -1px 0 $PantoneEggShellRgb,
+        1px -1px 0 $PantoneEggShellRgb, -1px 1px 0 $PantoneEggShellRgb,
+        1px 1px 0 $PantoneEggShellRgb;
     }
 
     .schedule {
       float: right;
       margin: 6px;
+      margin-left: 0px;
     }
   }
 

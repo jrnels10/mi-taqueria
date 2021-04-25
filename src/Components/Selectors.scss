@@ -1,29 +1,37 @@
-.daysOfOperation {
+@import "./../defaultCss.scss";
+.daysOfOperation_container {
+  width: auto;
+  text-align: center;
   margin-top: 5px;
-  height: 50px;
-  li {
-    display: inline;
-    list-style-type: none;
-    padding-right: 20px;
-    float: left;
-    border: 1px solid white;
-    border-radius: 20px;
-    padding: 3px;
-    height: 35px;
-    width: 35px;
-    position: relative;
-    margin: 3px;
-    span {
-      position: absolute;
-      top: 48%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+
+  .daysOfOperation {
+    margin: auto;
+    height: 50px;
+    padding: auto;
+    li {
+      display: inline;
+      list-style-type: none;
+      float: left;
+      border: 1px solid $PantoneMustard;
+      border-radius: 20px;
+      padding: 3px;
+      height: 35px;
+      width: 35px;
+      position: relative;
+      margin: 3px;
+      span {
+        position: absolute;
+        top: 48%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: $PantoneMustard;
+      }
     }
-  }
-  .day_true {
-    background-color: white;
-    span {
-      color: #343a40;
+    .day_true {
+      background-color: $PantoneMustard;
+      span {
+        color: $PantoneEggShell;
+      }
     }
   }
 }

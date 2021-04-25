@@ -7,8 +7,10 @@
   height: 75px;
   padding: 0.5rem 1.4rem !important;
   padding-bottom: 1.3rem !important;
-  background-color: $BlackPearl;
-  a label {
+  &--colored {
+    background-color: $PantoneBlue;
+  }
+  a .nav_icon {
     width: 40px;
     text-align: center;
     margin: auto;
@@ -18,15 +20,22 @@
       fill: $PantoneEggShell;
       margin-bottom: 2px;
     }
+    &--active {
+      color: $PantoneMustard;
+      svg {
+        fill: $PantoneMustard;
+      }
+    }
   }
 }
 
 .page_control {
   height: 45px;
-  padding: 0.5rem 1.4rem !important;
-  background-color: $BlackPearl;
+  padding: 0.5rem !important;
+  background-color: $PantoneBlue;
 
   &_goBack {
+    margin-top: 2px;
     float: left;
   }
 
@@ -40,6 +49,5 @@
     margin: auto;
     text-align: center;
     padding: 0px 10px;
-    padding-bottom: 26px;
   }
 }

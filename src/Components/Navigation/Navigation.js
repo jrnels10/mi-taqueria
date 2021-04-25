@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Navbar } from "react-bootstrap";
 import { Link, withRouter, useHistory, useLocation } from 'react-router-dom';
 import { GeoAltFill, House, PersonCircle, ArrowLeftCircle, Search, Star, BoxArrowInRight } from 'react-bootstrap-icons';
@@ -6,40 +6,49 @@ import { UserContext } from "../../Utils/Contexts/UserContext";
 import './Navigation.scss';
 
 const Navigation = () => {
-    const [search, setSearch] = useState(true)
+    const [search, setSearch] = useState(true);
+    const [activePage, setactivePage] = useState('home')
     let location = useLocation();
     const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/map/searchtaco'
-    console.log(search)
-    return <Navbar className='nav ' expand="lg">
+    const clearBackground = location.pathname === '/' || location.pathname.includes('signin') || location.pathname.includes('signup')
+    const onClickAction = (searching, pageSelected) => {
+        setactivePage(pageSelected)
+        setSearch(searching)
+    }
+
+    useEffect(() => {
+        return location.pathname.includes('taco') ? setactivePage('home') : null;
+    }, [location.pathname])
+    return <Navbar className={`nav nav${clearBackground ? '' : '--colored'}`} expand="lg">
         <Link to="/">
-            <label>
-                <House color="white" size={25} onClick={() => setSearch(true)} />
+            <label className={`nav_icon `} >
+                <House size={25} onClick={() => onClickAction(true, 'home')} />
                 Home
             </label>
         </Link>
         <Link to={{
             pathname: search ? searchLocationPath : '/map'
         }} >
-            <label>
-                <Search color="white" size={25} onClick={() => setSearch(!search)} />
+            <label className={`nav_icon nav_icon${activePage === 'search' ? '--active' : ''}`}>
+                <Search size={25} onClick={() => onClickAction(!search, 'search')} />
             Search
             </label>
         </Link>
         <Link to="/user/favorites">
-            <label>
-                <Star color="white" size={25} onClick={() => setSearch(true)} />
+            <label className={`nav_icon nav_icon${activePage === 'favorites' ? '--active' : ''}`}>
+                <Star size={25} onClick={() => onClickAction(true, 'favorites')} />
                 Favorites
             </label>
         </Link>
         <Link to="/map">
-            <label>
-                <GeoAltFill color="white" size={25} onClick={() => setSearch(true)} />
+            <label className={`nav_icon nav_icon${activePage === 'map' ? '--active' : ''}`}>
+                <GeoAltFill size={25} onClick={() => onClickAction(true, 'map')} />
                     Map
             </label>
         </Link>
         <Link to="/user/profile">
-            <label>
-                <PersonCircle color="white" size={25} onClick={() => setSearch(true)} />
+            <label className={`nav_icon nav_icon${activePage === 'user' ? '--active' : ''}`}>
+                <PersonCircle size={25} onClick={() => onClickAction(true, 'user')} />
                         Profile
             </label>
         </Link>
@@ -49,7 +58,7 @@ const Navigation = () => {
 export default withRouter(Navigation);
 
 
-export const PageControl = ({ children }) => {
+export const PageControl = ({ children = null }) => {
     const { authService, user } = useContext(UserContext);
     let history = useHistory();
     const handleSignout = () => {

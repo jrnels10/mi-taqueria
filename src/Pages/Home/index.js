@@ -9,11 +9,6 @@ export const Home = () => {
     <div className='homePage_intro'>
       <label className='main_title pacifico'>Mi Taqueria!</label>
       <p className='quickSand'>Lets go eat some tacos!</p>
-      {/* <div className='taco_img_container'>
-        <div className='taco_img'>
-          <img src={tacoImg} />
-        </div>
-      </div> */}
     </div>
 
     <ButtonGroup aria-label="Basic example" className='signup_buttons'>
@@ -21,7 +16,7 @@ export const Home = () => {
         <Button variant="light" id='register'> Register</Button>
       </Link>
       <Link to="/signin">
-        <Button variant="outline-light" id='signin'>
+        <Button id='signin'>
           Sign In</Button>
       </Link>
     </ButtonGroup>
