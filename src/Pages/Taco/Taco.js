@@ -55,8 +55,8 @@ export const Taco = () => {
 
             </PageControl>
             <div className='taco_page_img'>
-                {taco.photos.length ? taco.photos.map(image => {
-                    return <img src={image.fileUrl} />
+                {taco.photos.length ? taco.photos.map((image, idx) => {
+                    return <img key={image.fileName} src={image.fileUrl} />
                 }) : <img src={placeHolder} />}
             </div>
             <div className='p-2'>

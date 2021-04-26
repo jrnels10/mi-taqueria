@@ -31,14 +31,15 @@ class TaqueriaService extends BaseHttpService {
     return this.patch(`taqueria/${id}/status`, { status });
   }
   async deleteTaqueriaImage(image) {
-    return this.delete(`google-upload/${image.id}`)
+    // return this.delete(`google-upload/${image.id}`)
+    return null
   }
   async updateTaqueria(taco) {
-    if (taco.file.length) {
-      const bodyFormData = new FormData();
-      bodyFormData.append("file", taco.file[0]);
-      await this.post(`google-upload/${taco.id}`, bodyFormData, { headers: { 'Content-Type': 'multipart/form-data' } });
-    }
+    // if (taco.file.length) {
+    //   const bodyFormData = new FormData();
+    //   bodyFormData.append("file", taco.file[0]);
+    //   await this.post(`google-upload/${taco.id}`, bodyFormData, { headers: { 'Content-Type': 'multipart/form-data' } });
+    // }
     return this.patch(`taqueria/${taco.id}`, { ...taco });
   }
   createTaqueria(taqueria) {
