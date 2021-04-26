@@ -33,7 +33,8 @@
   height: 45px;
   padding: 0.5rem !important;
   background-color: $PantoneBlue;
-
+  position: fixed;
+  width: 100%;
   &_goBack {
     margin-top: 2px;
     float: left;

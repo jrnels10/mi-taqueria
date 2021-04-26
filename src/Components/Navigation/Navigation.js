@@ -17,8 +17,8 @@ const Navigation = () => {
     }
 
     useEffect(() => {
-        return location.pathname.includes('taco') ? setactivePage('home') : null;
-    }, [location.pathname])
+        return location.pathname.includes('taco') && !location.pathname.includes('searchtaco') ? setactivePage('home') : null;
+    }, [location.pathname]);
     return <Navbar className={`nav nav${clearBackground ? '' : '--colored'}`} expand="lg">
         <Link to="/">
             <label className={`nav_icon `} >
@@ -30,7 +30,7 @@ const Navigation = () => {
             pathname: search ? searchLocationPath : '/map'
         }} >
             <label className={`nav_icon nav_icon${activePage === 'search' ? '--active' : ''}`}>
-                <Search size={25} onClick={() => onClickAction(!search, 'search')} />
+                <Search size={25} onClick={() => onClickAction(true, 'search')} />
             Search
             </label>
         </Link>

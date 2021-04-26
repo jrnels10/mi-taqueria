@@ -4,7 +4,7 @@
   margin: 0px !important;
   max-width: 100%;
   &_app {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     color: $PantoneEggShell;
 
@@ -14,7 +14,7 @@
     background-repeat: no-repeat;
   }
   &_page {
-    height: calc(100% - 75px);
+    height: 100%;
     width: 100%;
     &--color {
       background: $PantoneEggShell;
