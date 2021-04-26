@@ -5,6 +5,8 @@
   color: black !important;
   padding: 0px;
   overflow-y: auto;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   .edit_label {
     color: $PantoneBlue;
     margin: 0.5rem;
