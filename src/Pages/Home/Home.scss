@@ -8,6 +8,15 @@
 }
 .page_container {
   height: 100%;
+  position: relative;
+
+  .info_modal {
+    position: absolute;
+    min-width: 300px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
   .homePage_intro {
     height: 75vh;
     width: 100%;
@@ -60,7 +69,7 @@
     }
     #signin {
       background-color: $PantoneBlue;
-      // border: 1px solid $PantoneEggShell;
+      border: 1px solid $PantoneBlue;
       color: $PantoneEggShell;
     }
   }
@@ -72,19 +81,3 @@
     height: 30vh;
   }
 }
-// .taco_img {
-//   float: left;
-//   border: 2px solid white;
-//   border-radius: 50%;
-//   position: relative;
-//   height: 40px;
-//   width: 40px;
-//   margin-top: 10px;
-//   img {
-//     position: absolute;
-//     width: 30px;
-//     top: 45%;
-//     left: 50%;
-//     transform: translate(-50%, -50%);
-//   }
-// }

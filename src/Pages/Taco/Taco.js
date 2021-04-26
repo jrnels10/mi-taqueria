@@ -10,13 +10,16 @@ import { PencilSquare } from 'react-bootstrap-icons';
 import { TaqueriaContext } from '../../Utils/Contexts/TaqueriaContext';
 import { Directions } from '../../Components/DIrections/Route';
 import { DaySelector } from '../../Components/Selectors';
+import { generateQR } from '../../Utils/tools';
 
 export const Taco = () => {
     const { user } = useContext(UserContext);
     const { tacoService, taqueria, taqueria: { selectTaco } } = useContext(TaqueriaContext);
     let location = useLocation();
     const [taco, settaco] = useState(null);
+    const [qrUrlCode, setQrUrlCode] = useState();
     let history = useHistory();
+    console.log(window.location.pathname)
     useEffect(() => {
         const fetchTaco = async () => {
             try {
@@ -25,6 +28,7 @@ export const Taco = () => {
                 if (res && res.data) {
                     taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: res.data } });
                     settaco(res.data);
+                    qrGenerator()
                 }
             } catch (error) {
                 console.log(error);
@@ -45,20 +49,24 @@ export const Taco = () => {
         taqueria.dispatch({ type: "EDIT_TACO", payload: { taco } });
         history.push(`${location.pathname}/update`)
     }
+
+    const qrGenerator = async () => {
+        const qrUrl = await generateQR(window.location.pathname)
+        setQrUrlCode(qrUrl)
+    }
     return taco ? (
         <div className='taco_page text-white'>
             <PageControl>
                 <label className='taco_title'>
                     {taco.name}
                 </label>
-
-
             </PageControl>
             <div className='taco_page_img'>
                 {taco.photos.length ? taco.photos.map((image, idx) => {
                     return <img key={image.fileName} src={image.fileUrl} />
                 }) : <img src={placeHolder} />}
             </div>
+            {/* <Button onClick={qrGenerator}>QR</Button> */}
             <div className='p-2'>
                 {user && user.id === taco.userId ? <span className='edit_label float-left mt-2'> <PencilSquare size={24} onClick={setEdit} /></span> : null}
 
@@ -72,6 +80,8 @@ export const Taco = () => {
                 <div className='h-100 w-50 pt-4 float-left '>
                     <Directions />
                 </div>
+                {qrUrlCode ? <img src={qrUrlCode} /> : null}
+
             </div>
         </div >
     ) : null
