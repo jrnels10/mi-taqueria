@@ -70,7 +70,7 @@ export const Signup: React.FC = (props: any) => {
   const { register, handleSubmit } = useForm<RegistrationUserData>();
   const onSubmit = useCallback(async (formValues: RegistrationUserData) => {
     const res = await authService.signup(formValues);
-    if (res === 201) {
+    if (res.status === 201) {
       props.history.push("/map");
     }
   }, []);

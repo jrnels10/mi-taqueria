@@ -1,7 +1,7 @@
 @import "./../../defaultCss.scss";
 
 .list {
-  height: calc(97% - 100px);
+  height: calc(97vh - 100px);
   width: 100%;
   overflow-y: auto;
   &_container {

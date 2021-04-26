@@ -11,12 +11,7 @@ export default class AuthService extends BaseHttpService {
   }
 
   async signup(newUser) {
-    const res = await this.post(`auth/signup`, { ...newUser });
-    if (res.status === 201) {
-      return await this.signin(newUser.email, newUser.password)
-    } else {
-      console.log(res)
-    }
+    return await this.post(`auth/signup`, { ...newUser });
   }
   async signInToken() {
     const res = await this.get(`auth/signInToken`);
