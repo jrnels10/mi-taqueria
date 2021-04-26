@@ -12,7 +12,8 @@ export const Home = () => {
 
   const shareModal = async () => {
     setopenModal(!openModal)
-    const qrUrl = await generateQR(window.location.pathname)
+    console.log(window.location)
+    const qrUrl = await generateQR(window.location.href)
     setQrUrlCode(qrUrl)
   }
   return <Container className="page_container ">

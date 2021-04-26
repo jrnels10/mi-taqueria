@@ -19,7 +19,6 @@ export const Taco = () => {
     const [taco, settaco] = useState(null);
     const [qrUrlCode, setQrUrlCode] = useState();
     let history = useHistory();
-    console.log(window.location.pathname)
     useEffect(() => {
         const fetchTaco = async () => {
             try {
@@ -51,7 +50,7 @@ export const Taco = () => {
     }
 
     const qrGenerator = async () => {
-        const qrUrl = await generateQR(window.location.pathname)
+        const qrUrl = await generateQR(window.location.href)
         setQrUrlCode(qrUrl)
     }
     return taco ? (
