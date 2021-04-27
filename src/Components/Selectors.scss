@@ -3,11 +3,18 @@
   width: auto;
   text-align: center;
   margin-top: 5px;
-
+  position: relative;
+  height: 50px;
   .daysOfOperation {
     margin: auto;
     height: 50px;
     padding: auto;
+    width: 330px;
+    position: absolute;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     li {
       display: inline;
       list-style-type: none;

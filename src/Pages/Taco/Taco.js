@@ -18,6 +18,7 @@ export const Taco = () => {
     let location = useLocation();
     const [taco, settaco] = useState(null);
     const [qrUrlCode, setQrUrlCode] = useState();
+    const [imageExpand, setImageExpand] = useState(null);
     let history = useHistory();
     useEffect(() => {
         const fetchTaco = async () => {
@@ -53,6 +54,7 @@ export const Taco = () => {
         const qrUrl = await generateQR(window.location.href)
         setQrUrlCode(qrUrl)
     }
+    console.log(imageExpand)
     return taco ? (
         <div className='taco_page text-white'>
             <PageControl>
@@ -60,10 +62,12 @@ export const Taco = () => {
                     {taco.name}
                 </label>
             </PageControl>
-            <div className='taco_page_img'>
-                {taco.photos.length ? taco.photos.map((image, idx) => {
-                    return <img key={image.fileName} src={image.fileUrl} />
-                }) : <img src={placeHolder} />}
+            <div className={`taco_page_img${imageExpand ? '--expand' : ''}`}>
+                {imageExpand ? <img className={`image--expand`} src={imageExpand} onClick={() => setImageExpand(null)} /> : <div className='h-100 w-100 position-relative'>
+                    {taco.photos.length ? taco.photos.map((image, idx) => {
+                        return <img className={`image`} key={image.fileName} src={image.fileUrl} onClick={() => setImageExpand(image.fileUrl)} />
+                    }) : <img src={placeHolder} />}
+                </div>}
             </div>
             {/* <Button onClick={qrGenerator}>QR</Button> */}
             <div className='p-2'>

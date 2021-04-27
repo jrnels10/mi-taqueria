@@ -16,10 +16,11 @@ import "./Mapindex.scss";
 import './Mapindex.scss';
 import { LocationMarker, SuggestedMarker, TaqueriaMarker, UserMarker } from "./Markers";
 import { TaqueriaSearch } from './../../Components/Search/Search';
-import { ArrowRightCircleFill } from "react-bootstrap-icons";
+import { ArrowRightCircleFill, BroadcastPin, CircleFill, GeoAlt, GeoAltFill } from "react-bootstrap-icons";
 import { MapContext } from "../../Utils/Contexts/MapContext";
 import { TaqueriaContext } from "../../Utils/Contexts/TaqueriaContext";
 import { DirectionsLine } from "../../Components/DIrections/Route";
+import { UserContext } from "../../Utils/Contexts/UserContext";
 
 export const Map = () => {
     const { tacoMap } = useContext(MapContext);
@@ -62,7 +63,7 @@ export const Map = () => {
                 {/* <MapConsumer>
                     {(map) => {
                         return <React.Fragment> */}
-
+                <LocateIcon />
                 <TileLayer
                     url={`https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=${process.env.REACT_APP_MAPBOX}`}
                 />
@@ -96,11 +97,6 @@ function MapEvents(props) {
         click: () => {
             taqueria.dispatch({ type: 'SET_SELECTED_TACO', payload: { selectTaco: null } });
         },
-        //     locationfound: (location) => {
-        //         console.log('location found:', location)
-        //         map.flyTo(location.latlng, map.getZoom())
-        //         setUserLocation([location.latitude, location.longitude])
-        //     },
     })
     const val = useRef();
     useEffect(
@@ -117,6 +113,19 @@ function MapEvents(props) {
     return null
 }
 
+const LocateIcon = () => {
+    const map = useMap();
+    const { user } = useContext(UserContext);
+    return <React.Fragment>
+        {/* <CircleFill style={{ position: 'absolute', zIndex: 1000 }} color='red' size={25} /> */}
+        <GeoAltFill style={{ position: 'absolute', zIndex: 1000 }} color='black' size={20} onClick={() => {
+            map.locate().on("locationfound", e => {
+                map.flyTo(e.latlng, 12);
+                user.dispatch({ type: "SET_USER_LOCATION", payload: { location: e.latlng } });
+            })
+        }} />
+    </React.Fragment>
+}
 const TacoCard = () => {
     const {
         taqueria,
@@ -133,12 +142,12 @@ const TacoCard = () => {
         }} >
             <div className="select_taco_body">
                 <label className='title'>
-                    {selectTaco.name.length > 15 ? `${selectTaco.name.substring(0, 15)}...` : selectTaco.name}
+                    {selectTaco.name.length > 20 ? `${selectTaco.name.substring(0, 20)}...` : selectTaco.name}
                 </label>
                 <label className={`schedule text-${selectTaco.status === 'CLOSED' ? 'danger' : 'success'}`}>
-                    <span className='schedule_status'>
+                    {/* <span className='schedule_status'>
                         {selectTaco.status}
-                    </span>
+                    </span> */}
                 </label>
             </div>
         </Link>

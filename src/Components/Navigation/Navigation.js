@@ -67,10 +67,10 @@ export const PageControl = ({ children = null }) => {
         history.push('/')
     }
     return <div className='page_control'>
-        <ArrowLeftCircle className='page_control_goBack' color="white" size={25} onClick={() => history.goBack()} />
+        <ArrowLeftCircle className='page_control_goBack' color="white" size={28} onClick={() => history.goBack()} />
         <div className='children_wrapper'>
             {children}
         </div>
-        {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={25} onClick={handleSignout} /> : null}
+        {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={28} onClick={handleSignout} /> : null}
     </div>
 }
