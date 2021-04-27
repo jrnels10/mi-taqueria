@@ -10,7 +10,7 @@ const Navigation = () => {
     const [activePage, setactivePage] = useState('home')
     let location = useLocation();
     const searchLocationPath = location.pathname.includes('map') || location.pathname.includes('list') ? `${location.pathname.split('/searchtaco')[0]}/searchtaco` : '/map/searchtaco'
-    const clearBackground = location.pathname === '/' || location.pathname.includes('signin') || location.pathname.includes('signup')
+    const clearBackground = location.pathname === '/';
     const onClickAction = (searching, pageSelected) => {
         setactivePage(pageSelected)
         setSearch(searching)

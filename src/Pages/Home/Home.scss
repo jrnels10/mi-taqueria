@@ -77,7 +77,13 @@
 
 .sign {
   height: 100%;
+  background-color: $PantoneEggShell;
+  color: $BlackPearl;
   &_message {
-    height: 30%;
+    height: 10%;
+  }
+  .sign_button {
+    background-color: $PantoneBlue;
+    border: 1px solid $PantoneBlue;
   }
 }

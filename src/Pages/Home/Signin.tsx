@@ -22,7 +22,7 @@ export const Signin: React.FC = (props: any) => {
     }
   }, []);
   return (
-    <Container className="sign text-white">
+    <Container className="sign ">
       <div className="sign_message">
         Lets sign in and find your favorite taquerias!
       </div>
@@ -57,7 +57,7 @@ export const Signin: React.FC = (props: any) => {
             Don't have an account? Sign up <Link to="signup">here</Link>.
           </Form.Text>
         </Form.Group>
-        <Button variant="light" type="submit" className="mt-4 w-100">
+        <Button type="submit" className="mt-4 w-100 sign_button">
           Sign in
         </Button>
       </Form>
@@ -76,7 +76,7 @@ export const Signup: React.FC = (props: any) => {
   }, []);
 
   return (
-    <Container className="sign text-white">
+    <Container className="sign">
       <div>Signup page</div>
       <br />
       <Form onSubmit={handleSubmit(onSubmit)}>
@@ -129,7 +129,7 @@ export const Signup: React.FC = (props: any) => {
             ref={register}
           />
         </Form.Group>
-        <Button variant="light" type="submit" className="mt-4 w-100">
+        <Button type="submit" className="mt-4 w-100 sign_button">
           Submit
         </Button>
       </Form>
