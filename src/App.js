@@ -19,8 +19,6 @@ import { List } from "./Pages/List/List";
 import { User } from "./Pages/User/User";
 import { Taco } from "./Pages/Taco/Taco";
 import CreateTaco from "./Pages/Taco/CreateTaco";
-import { useEffect } from 'react';
-import { useState } from 'react';
 import { PageContainer } from "./Components/Containers/Container";
 
 
@@ -30,13 +28,13 @@ export const App = () => {
       <Router>
         <UserProvider>
           <UserConsumer>
-            {value => {
+            {() => {
               return <TaqueriaProvider>
                 <TaqueriaConsumer>
-                  {taqueriaValue => {
+                  {() => {
                     return <MapProvider>
                       <MapConsumer>
-                        {mapValue => {
+                        {() => {
                           return <PageContainer>
                             <Switch>
                               <Route exact path="/" component={Home} />

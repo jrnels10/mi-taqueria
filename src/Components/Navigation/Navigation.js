@@ -31,7 +31,7 @@ const Navigation = () => {
         }} >
             <label className={`nav_icon nav_icon${activePage === 'search' ? '--active' : ''}`}>
                 <Search size={25} onClick={() => onClickAction(true, 'search')} />
-            Search
+                Search
             </label>
         </Link>
         <Link to="/user/favorites">
@@ -43,13 +43,13 @@ const Navigation = () => {
         <Link to="/map">
             <label className={`nav_icon nav_icon${activePage === 'map' ? '--active' : ''}`}>
                 <GeoAltFill size={25} onClick={() => onClickAction(true, 'map')} />
-                    Map
+                Map
             </label>
         </Link>
         <Link to="/user/profile">
             <label className={`nav_icon nav_icon${activePage === 'user' ? '--active' : ''}`}>
                 <PersonCircle size={25} onClick={() => onClickAction(true, 'user')} />
-                        Profile
+                Profile
             </label>
         </Link>
     </Navbar >
@@ -67,10 +67,10 @@ export const PageControl = ({ children = null }) => {
         history.push('/')
     }
     return <div className='page_control'>
-        <ArrowLeftCircle className='page_control_goBack' color="white" size={28} onClick={() => history.goBack()} />
+        <ArrowLeftCircle className='page_control_goBack' size={28} onClick={() => history.goBack()} />
         <div className='children_wrapper'>
             {children}
         </div>
-        {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={28} onClick={handleSignout} /> : null}
+        {/* {user && user.id ? <BoxArrowInRight className='page_control_signOut' color="white" size={28} onClick={handleSignout} /> : null} */}
     </div>
 }

@@ -1,6 +1,6 @@
 @import "./../defaultCss.scss";
 .daysOfOperation_container {
-  width: auto;
+  width: 100%;
   text-align: center;
   margin-top: 5px;
   position: relative;
@@ -8,7 +8,7 @@
   .daysOfOperation {
     margin: auto;
     height: 50px;
-    padding: auto;
+    padding: 0;
     width: 330px;
     position: absolute;
     height: 100%;
